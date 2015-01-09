@@ -24,11 +24,8 @@ public:
     // Deleting this texture.
     ~Texture();
 
-    // Binding this texture for rendering.
-    void bind() const;
-
-    // Unbinding a texture.
-    void unbind() const;
+    // Accessing the texture id.
+    GLuint getID() const;
 };
 
 #endif

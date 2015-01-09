@@ -13,12 +13,5 @@ Texture::~Texture() {
    glDeleteTextures(1, &this->id);
 }
 
-// Binding this texture for rendering.
-void Texture::bind() const {
-    glBindTexture(GL_TEXTURE_2D, this->id);
-}
-
-// Unbinding a texture.
-void Texture::unbind() const {
-    glBindTexture(GL_TEXTURE_2D, 0);
-}
+// Accessing the texture id.
+GLuint Texture::getID() const { return this->id; }
