@@ -20,7 +20,21 @@ int main() {
         return 1;
     }
 
+    glfwMakeContextCurrent(window);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+    glColor3f(1.f, 0.3f, 0.6f);
+
     while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glBegin(GL_QUADS);
+            glVertex2f(-0.5f, -0.5f);
+            glVertex2f( 0.5f, -0.5f);
+            glVertex2f( 0.5f,  0.5f);
+            glVertex2f(-0.5f,  0.5f);
+        glEnd();
+
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
