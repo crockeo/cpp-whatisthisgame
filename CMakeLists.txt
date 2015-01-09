@@ -23,13 +23,16 @@ add_executable(whatisthisgame ${SOURCES})
 find_package(opengl REQUIRED)
 find_package(glew REQUIRED)
 find_package(glfw REQUIRED)
+find_package(png REQUIRED)
 
 # Adding the include directories.
 include_directories(${OPENGL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIR}
-                    ${GLFW_INCLUDE_DIR})
+                    ${GLFW_INCLUDE_DIR}
+                    ${PNG_INCLUDE_DIR})
 
 # Linking the libraries.
 target_link_libraries(whatisthisgame ${OPENGL_LIBRARY}
                                      ${GLEW_LIBRARY}
-                                     ${GLFW_LIBRARY})
+                                     ${GLFW_LIBRARY}
+                                     ${PNG_LIBRARY})
