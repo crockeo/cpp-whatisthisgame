@@ -1,0 +1,8 @@
+# Ignoring cmake files.
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Ignoring build directories.
+build/
