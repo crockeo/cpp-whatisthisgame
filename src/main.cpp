@@ -3,23 +3,43 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "config.hpp"
+
 //////////
 // Code //
 
-// The entry point to the application.
-int main() {
+// Starting the engine.
+bool startEngine(Config cfg) {
+    // Starting up GLFW.
     if (!glfwInit()) {
         std::cout << "Could not start GLFW." << std::endl;
-        return 1;
+        return true;
     }
 
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Hello world", nullptr, nullptr);
-    if (window == nullptr) {
-        std::cout << "Could not open the GLFW window." << std::endl;
+    // Grabbing the monitor if you need to.
+    GLFWmonitor* monitor = cfg.fullscreen ? glfwGetPrimaryMonitor() : nullptr;
+    if (cfg.fullscreen && monitor == nullptr) {
+        std::cout << "Could not get the primary monitor." << std::endl;
         glfwTerminate();
-        return 1;
+        return true;
     }
 
+    // Creating the window.
+    GLFWwindow* window = glfwCreateWindow(
+        cfg.windowWidth,
+        cfg.windowHeight,
+        "whatisthisgame",
+        monitor,
+        nullptr
+    );
+
+    if (window == nullptr) {
+        std::cout << "Could not create the window." << std::endl;
+        glfwTerminate();
+        return true;
+    }
+
+    // Spawning the update & render threads.
     glfwMakeContextCurrent(window);
     glClearColor(0.2f, 0.2f, 0.2f, 1.f);
     glColor3f(1.f, 0.3f, 0.6f);
@@ -38,6 +58,13 @@ int main() {
         glfwPollEvents();
     }
 
-    glfwTerminate();
-    return 0;
+    return false;
+}
+
+// The entry point to the application.
+int main() {
+    if (startEngine(Config(640, 480, false))) {
+        std::cout << "Failed to start the engine." << std::endl;
+        return 1;
+    }
 }
