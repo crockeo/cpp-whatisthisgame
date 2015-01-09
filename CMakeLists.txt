@@ -17,14 +17,14 @@ set(SOURCES
 add_executable(whatisthisgame ${SOURCES})
 
 # Looking for OpenGL & GLFW.
-find_library(opengl REQUIRED)
-find_library(glew REQUIRED)
-find_library(glfw REQUIRED)
+find_package(opengl REQUIRED)
+find_package(glew REQUIRED)
+find_package(glfw REQUIRED)
 
 # Adding the include directories.
-include_directories(${OPENGL_INCLUDE_DIRS}
-                    ${GLEW_INCLUDE_DIRS}
-                    ${GLFW_INCLUDE_DIRS})
+include_directories(${OPENGL_INCLUDE_DIR}
+                    ${GLEW_INCLUDE_DIR}
+                    ${GLFW_INCLUDE_DIR})
 
 # Linking the libraries.
 target_link_libraries(whatisthisgame ${OPENGL_LIBRARY}
