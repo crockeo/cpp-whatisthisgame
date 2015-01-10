@@ -12,7 +12,7 @@
 //////////
 // Code //
 
-// 
+// A class to encapsulate asset loading and referencing.
 class Assets {
 private:
     std::unordered_map<std::string, Texture*> textures;
@@ -36,5 +36,8 @@ public:
     Texture getTexture(std::string) const;
     Shader getShader(std::string) const;
 };
+
+// Loading the default set of assets into the ref.
+void loadAssets(Assets&);
 
 #endif
