@@ -15,9 +15,6 @@ private:
     GLuint id;    
 
 public:
-    // Deleting the copy constructor.
-    Shader(const Shader&) = delete;
-
     // Constructing a shader from a location on the disk.
     Shader(std::string);
 

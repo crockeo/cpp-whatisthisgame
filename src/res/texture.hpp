@@ -16,9 +16,6 @@ private:
     GLuint id;
 
 public:
-    // Removing the copy constructor.
-    Texture(const Texture&) = delete;
-
     // Loading a texture from a location on the disk.
     Texture(std::string);
 
