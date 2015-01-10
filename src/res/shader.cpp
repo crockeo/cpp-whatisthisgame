@@ -11,10 +11,8 @@
 // Attempting to create a specific shader.
 GLuint loadShader(std::string path, GLenum type) {
     std::ifstream file(path);
-    if (!file.good()) {
-        std::cout << "File '" << path << "' does not exist!" << std::endl;
+    if (!file.good())
         return 0;
-    }
 
     std::string contents;
     while (!file.eof()) {
@@ -53,16 +51,25 @@ Shader::Shader(std::string path) {
     GLuint fragShader = loadShader(path + ".frag", GL_FRAGMENT_SHADER);
     GLuint geomShader = loadShader(path + ".geom", GL_GEOMETRY_SHADER);
 
-    GLuint id = glCreateProgram();
+    if (vertShader == 0 && fragShader == 0 && geomShader == 0) {
+        this->id = 0;
+        std::cout << "Failed to load any shaders for '" << path << "'." << std::endl;
+    } else {
+        this->id = glCreateProgram();
 
-    if (vertShader != 0)
-        glAttachShader(id, vertShader);
-    if (fragShader != 0)
-        glAttachShader(id, fragShader);
-    if (geomShader != 0)
-        glAttachShader(id, geomShader);
+        if (vertShader != 0)
+            glAttachShader(id, vertShader);
+        if (fragShader != 0)
+            glAttachShader(id, fragShader);
+        if (geomShader != 0)
+            glAttachShader(id, geomShader);
 
-    glLinkProgram(id);
+        glLinkProgram(this->id);
+
+        glDeleteShader(vertShader);
+        glDeleteShader(fragShader);
+        glDeleteShader(geomShader);
+    }
 }
 
 // Deleting a shader.
