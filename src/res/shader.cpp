@@ -17,8 +17,11 @@ GLuint loadShader(std::string path, GLenum type) {
     }
 
     std::string contents;
-    while (!file.eof())
+    while (!file.eof()) {
+        if (file.peek() == -1)
+            continue;
         contents.push_back((char)file.get());
+    }
 
     GLuint shader = glCreateShader(type);
     if (shader == 0)
