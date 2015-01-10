@@ -32,7 +32,12 @@ GLuint loadShader(std::string path, GLenum type) {
     GLint compiled;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
     if (compiled == GL_FALSE) {
-        std::cout << "Failed to compile shader '" << path << "'!" << std::endl;
+        int len;
+        GLchar log[1024];
+        glGetShaderInfoLog(shader, 1024, &len, log);
+
+        std::cout << "Failed to compile shader '" << path << "':" << std::endl;
+        std::cout << log << std::endl;
         return 0;
     }
 
