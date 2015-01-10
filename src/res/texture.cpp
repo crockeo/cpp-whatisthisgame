@@ -155,3 +155,10 @@ Texture::~Texture() {
 
 // Accessing the texture id.
 GLuint Texture::getID() const { return this->id; }
+
+// Checking if the texture is good.
+bool Texture::good() const { return this->getID() != 0; }
+
+// Getting the texture width and height respectively.
+int Texture::getWidth()  const { return this->width; }
+int Texture::getHeight() const { return this->height; }

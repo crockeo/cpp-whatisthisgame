@@ -27,6 +27,13 @@ public:
 
     // Accessing the texture id.
     GLuint getID() const;
+
+    // Checking if the texture is good.
+    bool good() const;
+
+    // Getting the texture width and height respectively.
+    int getWidth()  const;
+    int getHeight() const;
 };
 
 #endif
