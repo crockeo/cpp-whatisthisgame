@@ -13,6 +13,7 @@ set(SOURCES
   src/res/texture.cpp
   src/res/shader.cpp
   src/config.cpp
+  src/game.cpp
   src/main.cpp
 )
 
