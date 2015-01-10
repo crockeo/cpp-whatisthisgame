@@ -39,6 +39,7 @@ GLuint loadShader(std::string path, GLenum type) {
 
         std::cout << "Failed to compile shader '" << path << "':" << std::endl;
         std::cout << log << std::endl;
+        glDeleteShader(shader);
         return 0;
     }
 
@@ -65,6 +66,13 @@ Shader::Shader(std::string path) {
             glAttachShader(id, geomShader);
 
         glLinkProgram(this->id);
+
+        int linked;
+        glGetProgramiv(this->id, GL_LINK_STATUS, &linked);
+        if (linked == GL_FALSE) {
+            std::cout << "Failed to link '" << path << "'!" << std::endl;
+            glDeleteProgram(this->id);
+        }
 
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
