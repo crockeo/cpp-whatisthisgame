@@ -1,14 +1,36 @@
 #include "game.hpp"
 
+//////////////
+// Includes //
+#include <thread>
+
+#include "delta.hpp"
+
 //////////
 // Code //
 
-// Spawning a separate thread to update the game.
-void game::spawnUpdateThread(GLFWwindow* window, Config cfg) {
-    // TODO: Spawn the update thread.
+// The function to perform updating.
+void update(bool* running) {
+    Delta delta;
+    while (*running) {
+    }
 }
 
-// Spawning the synchronous thread to render the game.
-void game::spawnRenderThread(GLFWwindow* window, Config cfg) {
-    // TODO: Spawn the render thread.
+// The function to perform rendering.
+void render(GLFWwindow* window, bool* running) {
+    Delta delta;
+    while (*running) {
+        glfwPollEvents();
+        *running = !glfwWindowShouldClose(window);
+    }
+}
+
+// Starting the update and render threads.
+void game::startThreads(GLFWwindow* window, Config cfg) {
+    bool running = true;
+
+    std::thread updateThread(update, &running);
+    render(window, &running);
+
+    updateThread.join();
 }

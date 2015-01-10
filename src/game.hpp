@@ -10,11 +10,8 @@
 // Code //
 
 namespace game {
-    // Spawning a separate thread to update the game.
-    void spawnUpdateThread(GLFWwindow*, Config);
-
-    // Spawning the synchronous thread to render the game.
-    void spawnRenderThread(GLFWwindow*, Config);
+    // Starting the update and render threads.
+    void startThreads(GLFWwindow*, Config);
 }
 
 #endif

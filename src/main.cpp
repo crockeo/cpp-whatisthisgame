@@ -58,8 +58,7 @@ bool startEngine(Config cfg) {
         return true;
     }
 
-    game::spawnUpdateThread(window, cfg);
-    game::spawnRenderThread(window, cfg);
+    game::startThreads(window, cfg);
 
     return false;
 }
