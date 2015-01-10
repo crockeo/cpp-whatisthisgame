@@ -3,6 +3,7 @@
 //////////////
 // Includes //
 #include <chrono>
+#include <thread>
 
 //////////
 // Code //
@@ -30,4 +31,9 @@ float Delta::since() {
     this->last = curr;
 
     return dt;
+}
+
+// Sleeping for a number of milliseconds.
+void Delta::sleep(int time) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(time));
 }

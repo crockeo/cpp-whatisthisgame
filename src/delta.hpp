@@ -15,6 +15,9 @@ public:
 
     // Getting the time since it was last ticked (in seconds).
     float since();
+
+    // Sleeping for a number of milliseconds.
+    void sleep(int);
 };
 
 #endif
