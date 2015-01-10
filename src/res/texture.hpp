@@ -12,6 +12,7 @@
 // A class to represent a texture.
 class Texture {
 private:
+    int width, height;
     GLuint id;
 
 public:

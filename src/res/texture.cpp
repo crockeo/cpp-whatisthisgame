@@ -145,8 +145,7 @@ GLuint png_texture_load(const char * file_name, int * width, int * height)
 
 // Loading a texture from a location on the disk.
 Texture::Texture(std::string path) {
-    // Gotta find out how to infer the image size.
-    this->id = png_texture_load(path.c_str(), 0, 0);
+    this->id = png_texture_load(path.c_str(), &this->width, &this->height);
 }
 
 // Deleting this texture.
