@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "res/texture.hpp"
 #include "config.hpp"
 
 //////////
@@ -41,6 +42,10 @@ bool startEngine(Config cfg) {
 
     // Spawning the update & render threads.
     glfwMakeContextCurrent(window);
+
+    Texture t("res/bullet.png");
+    Texture t2("res/what.png");
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.f);
     glColor3f(1.f, 0.3f, 0.6f);
 
