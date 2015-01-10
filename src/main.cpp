@@ -1,9 +1,12 @@
 //////////////
 // Includes //
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 #include "res/texture.hpp"
+#include "res/shader.hpp"
+
 #include "config.hpp"
 
 //////////
@@ -42,9 +45,17 @@ bool startEngine(Config cfg) {
 
     // Spawning the update & render threads.
     glfwMakeContextCurrent(window);
+    int err = glewInit();
+    
+    if (err != GLEW_OK) {
+        std::cout << "Could not initialize GLEW." << std::endl;
+        glfwTerminate();
+        return true;
+    }
 
     Texture t("res/bullet.png");
     Texture t2("res/what.png");
+    Shader s("res/game2d");
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.f);
     glColor3f(1.f, 0.3f, 0.6f);

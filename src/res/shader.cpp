@@ -2,6 +2,7 @@
 
 //////////////
 // Includes //
+#include <iostream>
 #include <fstream>
 
 //////////
@@ -10,8 +11,10 @@
 // Attempting to create a specific shader.
 GLuint loadShader(std::string path, GLenum type) {
     std::ifstream file(path);
-    if (!file.good())
+    if (!file.good()) {
+        std::cout << "File '" << path << "' does not exist!" << std::endl;
         return 0;
+    }
 
     std::string contents;
     while (!file.eof())
@@ -25,6 +28,13 @@ GLuint loadShader(std::string path, GLenum type) {
     glShaderSource(shader, 1, &contentsCStr, nullptr);
 
     glCompileShader(shader);
+
+    GLint compiled;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+    if (compiled == GL_FALSE) {
+        std::cout << "Failed to compile shader '" << path << "'!" << std::endl;
+        return 0;
+    }
 
     return shader;
 }
@@ -48,7 +58,7 @@ Shader::Shader(std::string path) {
 }
 
 // Deleting a shader.
-Shader::~Shader() { }
+Shader::~Shader() { glDeleteProgram(this->id); }
 
 // Accessing the shader id.
 GLuint Shader::getID() const { return this->id; }
