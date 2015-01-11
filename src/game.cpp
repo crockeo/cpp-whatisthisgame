@@ -41,7 +41,7 @@ void render(GLFWwindow* window, Config cfg, bool& running) {
 }
 
 // Starting the update and render threads.
-void game::startThreads(GLFWwindow* window, Config cfg) {
+void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
 
     std::thread updateThread(update, window, cfg, std::cref(running));

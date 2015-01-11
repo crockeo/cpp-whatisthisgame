@@ -62,7 +62,7 @@ bool startEngine(Config cfg) {
     Assets a;
     loadAssets(a);
 
-    game::startThreads(window, cfg);
+    game::startThreads(window, cfg, a);
 
     return false;
 }

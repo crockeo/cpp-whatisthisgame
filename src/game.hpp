@@ -3,7 +3,10 @@
 
 //////////////
 // Includes //
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include "assets.hpp"
 #include "config.hpp"
 
 //////////
@@ -11,7 +14,7 @@
 
 namespace game {
     // Starting the update and render threads.
-    void startThreads(GLFWwindow*, Config);
+    void startThreads(GLFWwindow*, Config, const Assets&);
 }
 
 #endif
