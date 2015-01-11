@@ -12,6 +12,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 set(SOURCES
   src/res/texture.cpp
   src/res/shader.cpp
+  src/gamestate.cpp
   src/assets.cpp
   src/config.cpp
   src/delta.cpp

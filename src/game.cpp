@@ -4,6 +4,7 @@
 // Includes //
 #include <thread>
 
+#include "gamestate.hpp"
 #include "delta.hpp"
 
 //////////
@@ -14,7 +15,7 @@
 #define MAX_RENDERS_PER_SECOND 120
 
 // The function to perform updating.
-void update(GLFWwindow* window, Config cfg, const bool& running) {
+void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) {
     Delta delta;
     while (running) {
         float dt = delta.since();
@@ -26,7 +27,7 @@ void update(GLFWwindow* window, Config cfg, const bool& running) {
 }
 
 // The function to perform rendering.
-void render(GLFWwindow* window, Config cfg, bool& running) {
+void render(GLFWwindow* window, Config cfg, bool& running, const GameState& gs) {
     Delta delta;
     while (running) {
         float dt = delta.since();
@@ -43,9 +44,10 @@ void render(GLFWwindow* window, Config cfg, bool& running) {
 // Starting the update and render threads.
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
+    GameState gs(0, 0, 50, 50);
 
-    std::thread updateThread(update, window, cfg, std::cref(running));
-    render(window, cfg, std::ref(running));
+    std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
+    render(window, cfg, std::ref(running), std::cref(gs));
 
     updateThread.join();
 }
