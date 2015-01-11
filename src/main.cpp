@@ -6,6 +6,7 @@
 
 #include "res/texture.hpp"
 #include "res/shader.hpp"
+#include "assets.hpp"
 #include "config.hpp"
 #include "game.hpp"
 
@@ -48,7 +49,7 @@ bool startEngine(Config cfg) {
         return true;
     }
 
-    // Spawning the update & render threads.
+    // Getting everything ready and kicking off the render & update threads.
     glfwMakeContextCurrent(window);
     int err = glewInit();
     
@@ -57,6 +58,9 @@ bool startEngine(Config cfg) {
         glfwTerminate();
         return true;
     }
+
+    Assets a;
+    loadAssets(a);
 
     game::startThreads(window, cfg);
 
