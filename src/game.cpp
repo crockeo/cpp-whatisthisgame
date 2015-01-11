@@ -26,15 +26,17 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
     }
 }
 
+#include <iostream>
+
 // The function to perform rendering.
-void render(GLFWwindow* window, Config cfg, bool& running, const GameState& gs) {
+void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs) {
     Delta delta;
     while (running) {
         float dt = delta.since();
         if (dt < MAX_RENDERS_PER_SECOND / 1000.f)
             delta.sleep((int)((MAX_RENDERS_PER_SECOND / 1000.f - dt) * 1000.f));
 
-        // DO SOME RENDERING.
+        // Do some rendering here.
 
         glfwPollEvents();
         running = !glfwWindowShouldClose(window);
@@ -47,7 +49,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     GameState gs(0, 0, 50, 50);
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
-    render(window, cfg, std::ref(running), std::cref(gs));
+    render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs));
 
     updateThread.join();
 }
