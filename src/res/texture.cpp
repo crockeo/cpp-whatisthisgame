@@ -9,7 +9,7 @@
 //////////
 // Code //
 
-// Loading a png texture from the disk. I stole it from stackoverflow. Too lazy.
+// Loading a png texture from the disk. I stole it from stackoverflow. Too lazy
 GLuint png_texture_load(const char* file_name, int* width, int* height) {
     png_byte header[8];
 
@@ -93,7 +93,8 @@ GLuint png_texture_load(const char* file_name, int* width, int* height) {
 
     // Allocate the image_data as a big block, to be given to opengl
     png_byte* image_data;
-    image_data = (png_byte*)malloc(rowbytes * temp_height * sizeof(png_byte) + 15);
+    image_data = (png_byte*)malloc(rowbytes * temp_height * sizeof(png_byte));
+    memset(image_data, 0, rowbytes * temp_height * sizeof(png_byte));
     if (image_data == NULL) {
         std::cerr << "Error: Could not allocate memory for PNG image data." << std::endl;
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -124,11 +125,10 @@ GLuint png_texture_load(const char* file_name, int* width, int* height) {
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, temp_width, temp_height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, temp_width, temp_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // clean up
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     free(image_data);
     free(row_pointers);
@@ -145,7 +145,6 @@ Texture::Texture(const Texture& t) {
 // Loading a texture from a location on the disk.
 Texture::Texture(std::string path) {
     this->id = png_texture_load(path.c_str(), &this->width, &this->height);
-    this->original = true;
 }
 
 // Deleting this texture.
