@@ -2,12 +2,12 @@
 
 uniform sampler2D tex;
 
-in vec3 Color;
-in vec2 TexCoord;
+in vec3 pass_color;
+in vec2 pass_texCoord;
 
-out vec4 outColor;
+out vec4 out_color;
 
 void main()
 {
-    outColor = texture(tex, TexCoord) * vec4(Color, 1);
+    out_color = texture(tex, pass_texCoord) * vec4(pass_color, 1);
 }

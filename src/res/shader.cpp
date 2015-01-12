@@ -73,7 +73,7 @@ Shader::Shader(std::string path) {
         if (geomShader != 0)
             glAttachShader(id, geomShader);
 
-        glBindFragDataLocation(this->id, 0, "outColor");
+        glBindFragDataLocation(this->id, 0, "out_color");
 
         glLinkProgram(this->id);
 
