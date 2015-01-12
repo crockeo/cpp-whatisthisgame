@@ -13,9 +13,13 @@
 class Texture {
 private:
     int width, height;
+    bool original;
     GLuint id;
 
 public:
+    // The new copy constructor for this thingy.
+    Texture(const Texture&);
+
     // Loading a texture from a location on the disk.
     Texture(std::string);
 

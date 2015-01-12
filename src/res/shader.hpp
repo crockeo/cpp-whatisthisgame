@@ -12,9 +12,13 @@
 // A class to represent an OpenGL shader.
 class Shader {
 private:
-    GLuint id;    
+    bool original;
+    GLuint id;
 
 public:
+    // The new copy constructor for this thingy.
+    Shader(const Shader&);
+
     // Constructing a shader from a location on the disk.
     Shader(std::string);
 

@@ -46,8 +46,16 @@ GLuint loadShader(std::string path, GLenum type) {
     return shader;
 }
 
+// The new copy constructor for this thingy.
+Shader::Shader(const Shader& s) {
+    this->id = s.id;
+    this->original = false;
+}
+
 // Constructing a shader from a location on the disk.
 Shader::Shader(std::string path) {
+    this->original = false;
+
     GLuint vertShader = loadShader(path + ".vert", GL_VERTEX_SHADER);
     GLuint fragShader = loadShader(path + ".frag", GL_FRAGMENT_SHADER);
     GLuint geomShader = loadShader(path + ".geom", GL_GEOMETRY_SHADER);
@@ -74,6 +82,8 @@ Shader::Shader(std::string path) {
             glDeleteProgram(this->id);
         }
 
+        this->original = true;
+
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
         glDeleteShader(geomShader);
@@ -81,7 +91,10 @@ Shader::Shader(std::string path) {
 }
 
 // Deleting a shader.
-Shader::~Shader() { glDeleteProgram(this->id); }
+Shader::~Shader() {
+    if (this->original)
+        glDeleteProgram(this->id);
+}
 
 // Accessing the shader id.
 GLuint Shader::getID() const { return this->id; }

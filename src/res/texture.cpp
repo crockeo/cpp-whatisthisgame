@@ -136,14 +136,22 @@ GLuint png_texture_load(const char* file_name, int* width, int* height) {
     return texture;
 }
 
+// The new copy constructor for this thingy.
+Texture::Texture(const Texture& t) {
+    this->id = t.id;
+    this->original = false;
+}
+
 // Loading a texture from a location on the disk.
 Texture::Texture(std::string path) {
     this->id = png_texture_load(path.c_str(), &this->width, &this->height);
+    this->original = true;
 }
 
 // Deleting this texture.
 Texture::~Texture() {
-   glDeleteTextures(1, &this->id);
+    if (this->original)
+        glDeleteTextures(1, &this->id);
 }
 
 // Accessing the texture id.
