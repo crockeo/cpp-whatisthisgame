@@ -14,6 +14,13 @@ $ make
 $ ./build/bin/whatisthisgame
 ```
 
+### TODOs
+
+* Making the render function render the vertices inputted.
+* Move the render function from the `other` shader program to the `game2d`
+  shader program.
+* Make the shader loading (for the fragment output) more dynamic.
+
 ### License
 
 Refer to the `LICENSE` file for licensing information.
