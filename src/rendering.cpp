@@ -28,9 +28,9 @@ void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture
     GLuint vbo;
     glGenBuffers(1, &vbo);
     GLfloat vertices[] = {
-         10.f,  10.f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-        630.f,  10.f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-        630.f, 470.f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+         10.f,  10.f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Top-left
+        630.f,  10.f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Top-right
+        630.f, 470.f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
          10.f, 470.f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
     };
 
