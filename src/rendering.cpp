@@ -1,5 +1,7 @@
 #include "rendering.hpp"
 
+#include <iostream>
+
 //////////
 // Code //
 
@@ -18,42 +20,48 @@ std::vector<std::tuple<float, float>> rendering::generateVertices(float x, float
 }
 
 // Rendering a set of vertices.
-void rendering::renderVertices(std::vector<std::tuple<float, float>> vertices, Texture t, Shader s) {
-    float* fs = new float[vertices.size() * 2];
-
-    int vi = 0, fi = 0;
-    while (vi < vertices.size() && fi < vertices.size() * 2) {
-        fs[fi    ] = std::get<0>(vertices[vi]);
-        fs[fi + 1] = std::get<1>(vertices[vi]);
-
-        vi += 1;
-        fi += 2;
-    }
-
-    // Setting up the VBO.
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(fs), fs, GL_STATIC_DRAW);
-
-    // Setting up the VAO.
+void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture t, Shader s) {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0);
 
-    // TODO: Do some rendering.
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    GLfloat vertices[] = {
+        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
+    };
 
-    // Cleaning up the VBO.
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Cleaning up the VAO.
+    GLuint ebo;
+    glGenBuffers(1, &ebo);
+
+    GLuint elements[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
+    glUseProgram(s.getID());
+    GLint posAttrib = glGetAttribLocation(s.getID(), "position");
+    glEnableVertexAttribArray(posAttrib);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
+
+    GLint colAttrib = glGetAttribLocation(s.getID(), "color");
+    glEnableVertexAttribArray(colAttrib);
+    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
     glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
     glDeleteVertexArrays(1, &vao);
-
-    // Deleting the fs thing.
-    delete[] fs;
 }
 
 // Rendering a rectangle.

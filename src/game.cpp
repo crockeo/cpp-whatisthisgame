@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "gamestate.hpp"
+#include "rendering.hpp"
 #include "delta.hpp"
 
 //////////
@@ -26,8 +27,6 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
     }
 }
 
-#include <iostream>
-
 // The function to perform rendering.
 void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs) {
     Delta delta;
@@ -36,8 +35,10 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
         if (dt < MAX_RENDERS_PER_SECOND / 1000.f)
             delta.sleep((int)((MAX_RENDERS_PER_SECOND / 1000.f - dt) * 1000.f));
 
-        // Do some rendering here.
+        glClear(GL_COLOR_BUFFER_BIT);
+        rendering::renderRectangle(0, 0, 1, 1, assets.getTexture("res/player/01.png"), assets.getShader("res/other"));
 
+        glfwSwapBuffers(window);
         glfwPollEvents();
         running = !glfwWindowShouldClose(window);
     }

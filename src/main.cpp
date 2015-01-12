@@ -51,6 +51,7 @@ bool startEngine(Config cfg) {
 
     // Getting everything ready and kicking off the render & update threads.
     glfwMakeContextCurrent(window);
+    glewExperimental = GL_TRUE;
     int err = glewInit();
     
     if (err != GLEW_OK) {
