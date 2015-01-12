@@ -61,6 +61,8 @@ bool startEngine(Config cfg) {
     }
 
     glClearColor(1.f, 0.f, 1.f, 1.f);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Assets a;
     loadAssets(a);
