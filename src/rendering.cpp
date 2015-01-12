@@ -28,10 +28,10 @@ void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture
     GLuint vbo;
     glGenBuffers(1, &vbo);
     GLfloat vertices[] = {
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+         10.f,  10.f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
+        630.f,  10.f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
+        630.f, 470.f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+         10.f, 470.f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
     };
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -49,6 +49,9 @@ void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     glUseProgram(s.getID());
+
+    glUniform2f(glGetUniformLocation(s.getID(), "size"), 640, 480);
+
     GLint posAttrib = glGetAttribLocation(s.getID(), "position");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), 0);
