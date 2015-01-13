@@ -46,8 +46,8 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
             delta.sleep((int)((1.f / MAX_RENDERS_PER_SECOND - dt) * 1000.f));
 
         glClear(GL_COLOR_BUFFER_BIT);
-        rendering::renderRectangle(0, 0, 640, 480, assets.getTexture("res/background.png"), assets.getShader("res/other"));
-        rendering::renderRectangle(gs.x, gs.y, gs.w, gs.h, assets.getTexture("res/player/01.png"), assets.getShader("res/other"));
+        rendering::renderRectangle(0, 0, 640, 480, assets.getTexture("res/background.png"), assets.getShader("res/game2d"));
+        rendering::renderRectangle(gs.x, gs.y, gs.w, gs.h, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
 
         glfwSwapBuffers(window);
         glfwPollEvents();

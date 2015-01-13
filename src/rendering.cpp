@@ -29,10 +29,10 @@ void rendering::renderRectangle(float x, float y, float w, float h, Texture t, S
     glGenBuffers(1, &vbo);
 
     GLfloat vertices[] = {
-        x    , y    , 1.f, 1.f, 1.f, 0.f, 0.f,
-        x + w, y    , 1.f, 1.f, 1.f, 1.f, 0.f,
-        x + w, y + h, 1.f, 1.f, 1.f, 1.f, 1.f,
-        x    , y + h, 1.f, 1.f, 1.f, 0.f, 1.f
+        x    , y    , 0.f, 0.f,
+        x + w, y    , 1.f, 0.f,
+        x + w, y + h, 1.f, 1.f,
+        x    , y + h, 0.f, 1.f
     };
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -51,23 +51,19 @@ void rendering::renderRectangle(float x, float y, float w, float h, Texture t, S
 
     glUseProgram(s.getID());
 
-    glUniform2f(glGetUniformLocation(s.getID(), "size"), 640, 480);
+    glUniform2f(glGetUniformLocation(s.getID(), "in_size"), 640, 480);
 
-    GLint posAttrib = glGetAttribLocation(s.getID(), "position");
+    GLint posAttrib = glGetAttribLocation(s.getID(), "in_vertexCoord");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
 
-    GLint colAttrib = glGetAttribLocation(s.getID(), "color");
-    glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
-
-    GLint texAttrib = glGetAttribLocation(s.getID(), "texCoord");
+    GLint texAttrib = glGetAttribLocation(s.getID(), "in_texCoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(5 * sizeof(GLfloat)));
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, t.getID());
-    glUniform1i(glGetUniformLocation(s.getID(), "texSampler"), 0);
+    glUniform1i(glGetUniformLocation(s.getID(), "in_tex"), 0);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
