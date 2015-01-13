@@ -3,6 +3,8 @@
 
 //////////////
 // Includes //
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <vector>
 #include <tuple>
 
@@ -17,7 +19,7 @@ namespace rendering {
     std::vector<std::tuple<float, float>> generateVertices(float, float, float, float);
 
     // Rendering a rectangle.
-    void renderRectangle(float, float, float, float, Texture, Shader);
+    void renderRectangle(GLFWwindow*, float, float, float, float, Texture, Shader);
 }
 
 #endif

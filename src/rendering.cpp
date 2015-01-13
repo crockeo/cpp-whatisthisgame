@@ -1,7 +1,5 @@
 #include "rendering.hpp"
 
-#include <iostream>
-
 //////////
 // Code //
 
@@ -20,7 +18,7 @@ std::vector<std::tuple<float, float>> rendering::generateVertices(float x, float
 }
 
 // Rendering a rectangle.
-void rendering::renderRectangle(float x, float y, float w, float h, Texture t, Shader s) {
+void rendering::renderRectangle(GLFWwindow* window, float x, float y, float w, float h, Texture t, Shader s) {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -51,16 +49,22 @@ void rendering::renderRectangle(float x, float y, float w, float h, Texture t, S
 
     glUseProgram(s.getID());
 
-    glUniform2f(glGetUniformLocation(s.getID(), "in_size"), 640, 480);
+    // Setting the window size.
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    glUniform2f(glGetUniformLocation(s.getID(), "in_size"), width, height);
 
+    // Setting the vertex coordinate.
     GLint posAttrib = glGetAttribLocation(s.getID(), "in_vertexCoord");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
 
+    // Setting the texture coordinate.
     GLint texAttrib = glGetAttribLocation(s.getID(), "in_texCoord");
     glEnableVertexAttribArray(texAttrib);
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
 
+    // Setting the texture sampler.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, t.getID());
     glUniform1i(glGetUniformLocation(s.getID(), "in_tex"), 0);
