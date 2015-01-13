@@ -125,7 +125,12 @@ GLuint png_texture_load(const char* file_name, int* width, int* height) {
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, temp_width, temp_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+    if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, temp_width, temp_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+    else
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB , temp_width, temp_height, 0, GL_RGB , GL_UNSIGNED_BYTE, image_data);
+
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 

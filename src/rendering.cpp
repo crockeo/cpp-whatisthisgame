@@ -19,19 +19,20 @@ std::vector<std::tuple<float, float>> rendering::generateVertices(float x, float
     return points;
 }
 
-// Rendering a set of vertices.
-void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture t, Shader s) {
+// Rendering a rectangle.
+void rendering::renderRectangle(float x, float y, float w, float h, Texture t, Shader s) {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
     GLuint vbo;
     glGenBuffers(1, &vbo);
+
     GLfloat vertices[] = {
-         10.f,  10.f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Top-left
-        630.f,  10.f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Top-right
-        630.f, 470.f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-         10.f, 470.f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+        x    , y    , 1.f, 1.f, 1.f, 0.f, 0.f,
+        x + w, y    , 1.f, 1.f, 1.f, 1.f, 0.f,
+        x + w, y + h, 1.f, 1.f, 1.f, 1.f, 1.f,
+        x    , y + h, 1.f, 1.f, 1.f, 0.f, 1.f
     };
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -73,9 +74,4 @@ void rendering::renderVertices(std::vector<std::tuple<float, float>> vs, Texture
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
     glDeleteVertexArrays(1, &vao);
-}
-
-// Rendering a rectangle.
-void rendering::renderRectangle(float x, float y, float w, float h, Texture t, Shader s) {
-    rendering::renderVertices(rendering::generateVertices(x, y, w, h), t, s);
 }

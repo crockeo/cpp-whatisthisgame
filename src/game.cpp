@@ -15,15 +15,25 @@
 #define MAX_UPDATES_PER_SECOND 300
 #define MAX_RENDERS_PER_SECOND 120
 
+// The speed of the player.
+#define SPEED 300
+
 // The function to perform updating.
 void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) {
     Delta delta;
     while (running) {
         float dt = delta.since();
-        if (dt < MAX_UPDATES_PER_SECOND / 1000.f)
-            delta.sleep((int)((MAX_UPDATES_PER_SECOND / 1000.f - dt) * 1000.f));
+        if (dt < 1.f / MAX_UPDATES_PER_SECOND)
+            delta.sleep((int)((1.f / MAX_UPDATES_PER_SECOND - dt) * 1000.f));
 
-        // DO UPDATING I THINK?
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            gs.y += SPEED * dt;
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            gs.y -= SPEED * dt;
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            gs.x -= SPEED * dt;
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            gs.x += SPEED * dt;
     }
 }
 
@@ -32,11 +42,12 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
     Delta delta;
     while (running) {
         float dt = delta.since();
-        if (dt < MAX_RENDERS_PER_SECOND / 1000.f)
-            delta.sleep((int)((MAX_RENDERS_PER_SECOND / 1000.f - dt) * 1000.f));
+        if (dt < 1.f / MAX_RENDERS_PER_SECOND)
+            delta.sleep((int)((1.f / MAX_RENDERS_PER_SECOND - dt) * 1000.f));
 
         glClear(GL_COLOR_BUFFER_BIT);
-        rendering::renderRectangle(0, 0, 1, 1, assets.getTexture("res/player/01.png"), assets.getShader("res/other"));
+        rendering::renderRectangle(0, 0, 640, 480, assets.getTexture("res/background.png"), assets.getShader("res/other"));
+        rendering::renderRectangle(gs.x, gs.y, gs.w, gs.h, assets.getTexture("res/player/01.png"), assets.getShader("res/other"));
 
         glfwSwapBuffers(window);
         glfwPollEvents();
