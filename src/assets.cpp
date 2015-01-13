@@ -59,7 +59,6 @@ void loadAssets(Assets& assets) {
 
     // The game shader.
     assets.addShader("res/game2d");
-    assets.addShader("res/other");
 
     // The player.
     assets.addTexture("res/player/01.png");
