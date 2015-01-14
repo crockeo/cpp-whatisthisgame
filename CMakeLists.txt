@@ -14,7 +14,6 @@ set(SOURCES
   src/res/shader.cpp
   src/gamestate.cpp
   src/rendering.cpp
-  src/renderer.cpp
   src/assets.cpp
   src/config.cpp
   src/delta.cpp
