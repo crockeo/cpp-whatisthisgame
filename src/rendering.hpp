@@ -3,6 +3,7 @@
 
 //////////////
 // Includes //
+#include <unordered_map>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <vector>
@@ -13,14 +14,6 @@
 
 //////////
 // Code //
-
-namespace rendering {
-    // Generating a set of vertices for a rectangle.
-    std::vector<std::tuple<float, float>> generateVertices(float, float, float, float);
-
-    // Rendering a rectangle.
-    void renderRectangle(GLFWwindow*, float, float, float, float, Texture, Shader);
-}
 
 // The coordinates themselves for the rectangle.
 std::vector<GLfloat> generateRectangle(float, float, float, float);
@@ -61,5 +54,11 @@ public:
     // Performing this Render.
     void render(GLFWwindow*) const;
 };
+
+// A type to define a set of Renders.
+typedef std::unordered_map<std::string, Render*> Renders;
+
+// Rendering every single Render within a Renders.
+void renderAll(GLFWwindow*, const Renders&);
 
 #endif

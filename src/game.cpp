@@ -38,7 +38,7 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
 }
 
 // The function to perform rendering.
-void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs, Render& r) {
+void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs, Renders& r) {
     Delta delta;
     while (running) {
         float dt = delta.since();
@@ -46,12 +46,12 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
             delta.sleep((int)((1.f / MAX_RENDERS_PER_SECOND - dt) * 1000.f));
 
         glClear(GL_COLOR_BUFFER_BIT);
-        rendering::renderRectangle(window,    0,    0,  640,  480, assets.getTexture("res/background.png"), assets.getShader("res/game2d"));
 
-        r.updateVertices(generateRectangle(gs.x, gs.y, gs.w, gs.h),
-                         rectangleOrder(),
-                         GL_DYNAMIC_DRAW);
-        r.render(window);
+        r["player"]->updateVertices(generateRectangle(gs.x, gs.y, gs.w, gs.h),
+                                    rectangleOrder(),
+                                    GL_DYNAMIC_DRAW);
+
+        renderAll(window, r);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -63,10 +63,14 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
     GameState gs(0, 0, 50, 50);
-    Render r(0, 0, 50, 50, GL_DYNAMIC_DRAW, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
+
+    Renders renders;
+
+    renders["player"] = new Render(0, 0, 50, 50, GL_DYNAMIC_DRAW, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
+    renders["background"] = new Render(0, 0, 640, 480, GL_STATIC_DRAW, assets.getTexture("res/background.png"), assets.getShader("res/game2d"));
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
-    render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), r);
+    render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), renders);
 
 
     updateThread.join();
