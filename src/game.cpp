@@ -38,7 +38,7 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
 }
 
 // The function to perform rendering.
-void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs) {
+void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs, Render& r) {
     Delta delta;
     while (running) {
         float dt = delta.since();
@@ -47,7 +47,11 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 
         glClear(GL_COLOR_BUFFER_BIT);
         rendering::renderRectangle(window,    0,    0,  640,  480, assets.getTexture("res/background.png"), assets.getShader("res/game2d"));
-        rendering::renderRectangle(window, gs.x, gs.y, gs.w, gs.h, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
+
+        r.updateVertices(generateRectangle(gs.x, gs.y, gs.w, gs.h),
+                         rectangleOrder(),
+                         GL_DYNAMIC_DRAW);
+        r.render(window);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -59,9 +63,11 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
     GameState gs(0, 0, 50, 50);
+    Render r(0, 0, 50, 50, GL_DYNAMIC_DRAW, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
-    render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs));
+    render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), r);
+
 
     updateThread.join();
 }
