@@ -16,7 +16,10 @@
 #define MAX_RENDERS_PER_SECOND 120
 
 // The speed of the player.
-#define SPEED 300
+#define SPEED 500
+
+// The current speed of the player.
+float dx = 0, dy = 0;
 
 // The function to perform updating.
 void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) {
@@ -26,14 +29,45 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
         if (dt < 1.f / MAX_UPDATES_PER_SECOND)
             delta.sleep((int)((1.f / MAX_UPDATES_PER_SECOND - dt) * 1000.f));
 
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            gs.position.y += SPEED * dt;
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            gs.position.y -= SPEED * dt;
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            gs.position.x -= SPEED * dt;
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            gs.position.x += SPEED * dt;
+        bool my = false, mx = false;
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            dy += SPEED * dt;
+            my = true;
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            dy -= SPEED * dt;
+            my = true;
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+            dx -= SPEED * dt;
+            mx = true;
+        }
+        
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            dx += SPEED * dt;
+            mx = true;
+        }
+
+        if (!my) {
+            if (dy > 0) {
+                dy -= SPEED / 10 * dt;
+            } else {
+                dy += SPEED / 10 * dt;
+            }
+        }
+
+        if (!mx) {
+            if (dx > 0) {
+                dx -= SPEED / 10 * dt;
+            } else {
+                dx += SPEED / 10 * dt;
+            }
+        }
+
+        gs.position.x += dx * dt;
+        gs.position.y += dy * dt;
     }
 }
 
