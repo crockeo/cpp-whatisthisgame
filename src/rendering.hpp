@@ -11,12 +11,16 @@
 
 #include "res/texture.hpp"
 #include "res/shader.hpp"
+#include "rectangle.hpp"
 
 //////////
 // Code //
 
 // The coordinates themselves for the rectangle.
-std::vector<GLfloat> generateRectangle(float, float, float, float);
+std::vector<GLfloat> generateRectangle(Rectangle);
+
+// The coordinates themselves for a set of rectangles.
+std::vector<GLfloat> generateRectangles(std::vector<Rectangle>);
 
 // The order of vertices for a rectangle.
 std::vector<GLuint> rectangleOrder();
@@ -43,7 +47,7 @@ public:
     Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, Texture, Shader);
 
     // Constructing a new Render as a rectangle.
-    Render(float, float, float, float, GLenum, Texture, Shader);
+    Render(Rectangle, GLenum, Texture, Shader);
 
     // Destroying this render.
     ~Render();

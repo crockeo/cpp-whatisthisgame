@@ -13,6 +13,7 @@ set(SOURCES
   src/res/texture.cpp
   src/res/shader.cpp
   src/gamestate.cpp
+  src/rectangle.cpp
   src/rendering.cpp
   src/assets.cpp
   src/config.cpp

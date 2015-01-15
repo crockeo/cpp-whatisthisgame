@@ -47,7 +47,7 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 
         glClear(GL_COLOR_BUFFER_BIT);
 
-        r["player"]->updateVertices(generateRectangle(gs.x, gs.y, gs.w, gs.h),
+        r["player"]->updateVertices(generateRectangle(Rectangle(gs.x, gs.y, gs.w, gs.h)),
                                     rectangleOrder(),
                                     GL_DYNAMIC_DRAW);
 
@@ -66,8 +66,15 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
 
     Renders renders;
 
-    renders["player"] = new Render(0, 0, 50, 50, GL_DYNAMIC_DRAW, assets.getTexture("res/player/01.png"), assets.getShader("res/game2d"));
-    renders["background"] = new Render(0, 0, 640, 480, GL_STATIC_DRAW, assets.getTexture("res/background.png"), assets.getShader("res/game2d"));
+    renders["player"] = new Render(Rectangle(0, 0, 50, 50),
+                                   GL_DYNAMIC_DRAW,
+                                   assets.getTexture("res/player/01.png"),
+                                   assets.getShader("res/game2d"));
+
+    renders["background"] = new Render(Rectangle(0, 0, 640, 480),
+                                       GL_STATIC_DRAW,
+                                       assets.getTexture("res/background.png"),
+                                       assets.getShader("res/game2d"));
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
     render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), renders);

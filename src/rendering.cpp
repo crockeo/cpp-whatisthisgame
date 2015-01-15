@@ -3,20 +3,35 @@
 //////////
 // Code //
 
+template <class T>
+std::vector<T> flatten(std::vector<std::vector<T>> levels) {
+    std::vector<T> ret;
+
+    for (auto a = levels.begin(); a != levels.end(); a++)
+        for (auto b = a->begin(); b != a->end(); b++)
+            ret.push_back(*b);
+
+    return ret;
+}
+
 // The coordinates themselves for the rectangle.
-std::vector<GLfloat> generateRectangle(float x, float y, float w, float h) {
-    GLfloat vs[] = {
-        x    , y    , 0.f, 0.f,
-        x + w, y    , 1.f, 0.f,
-        x + w, y + h, 1.f, 1.f,
-        x    , y + h, 0.f, 1.f
+std::vector<GLfloat> generateRectangle(Rectangle r) {
+    std::vector<GLfloat> vertices {
+        r.x      , r.y      , 0.f, 0.f,
+        r.x + r.w, r.y      , 1.f, 0.f,
+        r.x + r.w, r.y + r.h, 1.f, 1.f,
+        r.x      , r.y + r.h, 0.f, 1.f
     };
 
-    std::vector<GLfloat> vertices;
-    for (int i = 0; i < sizeof(vs) / sizeof(GLfloat); i++)
-        vertices.push_back(vs[i]);
-
     return vertices;
+}
+
+// The coordinates themselves for a set of rectangles.
+std::vector<GLfloat> generateRectangles(std::vector<Rectangle> rs) {
+    std::vector<std::vector<GLfloat>> vs;
+    for (auto it = rs.begin(); it != rs.end(); it++)
+        vs.push_back(generateRectangle(*it));
+    return flatten(vs);
 }
 
 // The order of vertices for a rectangle.
@@ -31,6 +46,17 @@ std::vector<GLuint> rectangleOrder() {
         order.push_back(os[i]);
 
     return order;
+}
+
+// The order for multiple rectangles.
+std::vector<GLuint> rectangleOrders(int num) {
+    if (num <= 0)
+        return std::vector<GLuint>();
+
+    std::vector<std::vector<GLuint>> os;
+    for (int i = 0; i < num; i++)
+        os.push_back(rectangleOrder());
+    return flatten(os);
 }
 
 // Constructing a new Render with a set of points, a texture, and a shader.
@@ -51,12 +77,11 @@ Render::Render(std::vector<GLfloat> vertices,
 }
 
 // Constructing a new Render as a rectangle.
-Render::Render(float x, float y,
-               float w, float h,
+Render::Render(Rectangle r,
                GLenum type,
                Texture texture,
                Shader shader) :
-        Render(generateRectangle(x, y, w, h),
+        Render(generateRectangle(r),
                rectangleOrder(),
                type,
                texture,
