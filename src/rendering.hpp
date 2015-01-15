@@ -25,6 +25,9 @@ std::vector<GLfloat> generateRectangles(std::vector<Rectangle>);
 // The order of vertices for a rectangle.
 std::vector<GLuint> rectangleOrder();
 
+// The order for multiple rectangles.
+std::vector<GLuint> rectangleOrders(int);
+
 // A class to represent a single render.
 class Render {
 private:

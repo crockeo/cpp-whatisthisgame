@@ -4,9 +4,10 @@
 // Code //
 
 // Constructing a new game state.
-GameState::GameState(float x, float y, float w, float h) {
-    this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
+GameState::GameState() :
+        position(0, 0, 50, 50) {
+    this->enemies.push_back(Rectangle(100, 100, 50, 50));
+    this->enemies.push_back(Rectangle(150, 100, 50, 50));
+    this->enemies.push_back(Rectangle(100, 150, 50, 50));
+    this->enemies.push_back(Rectangle(150, 150, 50, 50));
 }

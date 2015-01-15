@@ -27,13 +27,13 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
             delta.sleep((int)((1.f / MAX_UPDATES_PER_SECOND - dt) * 1000.f));
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            gs.y += SPEED * dt;
+            gs.position.y += SPEED * dt;
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            gs.y -= SPEED * dt;
+            gs.position.y -= SPEED * dt;
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            gs.x -= SPEED * dt;
+            gs.position.x -= SPEED * dt;
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            gs.x += SPEED * dt;
+            gs.position.x += SPEED * dt;
     }
 }
 
@@ -47,7 +47,7 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 
         glClear(GL_COLOR_BUFFER_BIT);
 
-        r["player"]->updateVertices(generateRectangle(Rectangle(gs.x, gs.y, gs.w, gs.h)),
+        r["player"]->updateVertices(generateRectangle(gs.position),
                                     rectangleOrder(),
                                     GL_DYNAMIC_DRAW);
 
@@ -62,14 +62,20 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 // Starting the update and render threads.
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
-    GameState gs(0, 0, 50, 50);
+    GameState gs;
 
     Renders renders;
 
-    renders["player"] = new Render(Rectangle(0, 0, 50, 50),
+    renders["player"] = new Render(gs.position,
                                    GL_DYNAMIC_DRAW,
                                    assets.getTexture("res/player/01.png"),
                                    assets.getShader("res/game2d"));
+
+    renders["enemies"] = new Render(generateRectangles(gs.enemies),
+                                    rectangleOrders(gs.enemies.size()),
+                                    GL_STATIC_DRAW,
+                                    assets.getTexture("res/enemy/01.png"),
+                                    assets.getShader("res/game2d"));
 
     renders["background"] = new Render(Rectangle(0, 0, 640, 480),
                                        GL_STATIC_DRAW,

@@ -53,10 +53,14 @@ std::vector<GLuint> rectangleOrders(int num) {
     if (num <= 0)
         return std::vector<GLuint>();
 
-    std::vector<std::vector<GLuint>> os;
-    for (int i = 0; i < num; i++)
-        os.push_back(rectangleOrder());
-    return flatten(os);
+    std::vector<GLuint> os;
+    for (int i = 0; i < num; i++) {
+        std::vector<GLuint> order = rectangleOrder();
+        for (auto it = order.begin(); it != order.end(); it++)
+            os.push_back(*it + 4 * i);
+    }
+
+    return os;
 }
 
 // Constructing a new Render with a set of points, a texture, and a shader.
