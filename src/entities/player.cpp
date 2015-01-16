@@ -6,7 +6,7 @@
 #define SPEED 500
 
 // Creating a new player at a given location.
-Player::Player(Renders& renders, float x, float y, float w, float h) :
+Player::Player(float x, float y, float w, float h) :
         Entity(Rectangle(x, y, w, h)) {
     this->dy = 0;
     this->dx = 0;

@@ -19,7 +19,7 @@ private:
 
 public:
     // Creating a new player at a given location.
-    Player(Renders&, float, float, float, float);
+    Player(float, float, float, float);
 
     // Updating this entity.
     void update(GLFWwindow*, const GameState&, float);
