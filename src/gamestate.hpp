@@ -45,6 +45,10 @@ public:
     Rectangle position;
     std::vector<Rectangle> enemies;
 
+    // Deleting some implicitly declared stuff.
+    GameState(const GameState&) = delete;
+    GameState& operator=(const GameState&) = delete;
+
     // Constructing a new game state.
     GameState();
 
@@ -66,5 +70,8 @@ public:
     // Accessing an entity.
     Entity* getEntity(std::string) const;
 };
+
+// Constructing a default GameState.
+void initializeGameState(GameState&);
 
 #endif

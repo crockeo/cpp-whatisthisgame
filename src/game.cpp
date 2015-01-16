@@ -57,9 +57,9 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
     Renders renders;
-    GameState gs;
 
-    gs.addEntity("player", new Player(renders, 0, 0, 50, 50));
+    GameState gs;
+    initializeGameState(gs);
 
     renders["player"] = new Render(gs.position,
                                    GL_DYNAMIC_DRAW,

@@ -1,5 +1,9 @@
 #include "gamestate.hpp"
 
+//////////////
+// Includes //
+#include "entities/player.hpp"
+
 //////////
 // Code //
 
@@ -58,4 +62,9 @@ Entity* GameState::getEntity(std::string name) const {
     if (this->entities.find(name) == this->entities.end())
         return nullptr;
     return this->entities.at(name);
+}
+
+// Constructing a default GameState.
+void initializeGameState(GameState& gs) {
+    gs.addEntity("player", new Player(0, 0, 50, 50));
 }
