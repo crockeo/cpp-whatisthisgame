@@ -4,6 +4,7 @@
 // Code //
 
 #define SPEED 500
+#define MIN_SPEED 1
 
 // Creating a new player at a given location.
 Player::Player(float x, float y, float w, float h) :
@@ -50,6 +51,11 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
             this->dx += SPEED / 10 * dt;
         }
     }
+
+    if (!my && this->dy > -MIN_SPEED && this->dy < MIN_SPEED)
+        this->dy = 0;
+    if (!mx && this->dx > -MIN_SPEED && this->dx < MIN_SPEED)
+        this->dx = 0;
 
     this->getPosition().x += this->dx * dt;
     this->getPosition().y += this->dy * dt;
