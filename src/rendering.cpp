@@ -17,10 +17,10 @@ std::vector<T> flatten(std::vector<std::vector<T>> levels) {
 // The coordinates themselves for the rectangle.
 std::vector<GLfloat> generateRectangle(Rectangle r, int layer) {
     std::vector<GLfloat> vertices {
-        r.x      , r.y      , -layer / 100.f, 0.f, 0.f,
-        r.x + r.w, r.y      , -layer / 100.f, 1.f, 0.f,
-        r.x + r.w, r.y + r.h, -layer / 100.f, 1.f, 1.f,
-        r.x      , r.y + r.h, -layer / 100.f, 0.f, 1.f
+        r.x      , r.y      , -layer / MAX_LAYERS, 0.f, 0.f,
+        r.x + r.w, r.y      , -layer / MAX_LAYERS, 1.f, 0.f,
+        r.x + r.w, r.y + r.h, -layer / MAX_LAYERS, 1.f, 1.f,
+        r.x      , r.y + r.h, -layer / MAX_LAYERS, 0.f, 1.f
     };
 
     return vertices;

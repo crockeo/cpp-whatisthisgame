@@ -16,6 +16,9 @@
 //////////
 // Code //
 
+// The maximum number of layers.
+const static float MAX_LAYERS = 24.f;
+
 // The coordinates themselves for the rectangle.
 std::vector<GLfloat> generateRectangle(Rectangle, int);
 
