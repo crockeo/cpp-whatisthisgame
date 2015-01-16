@@ -15,22 +15,22 @@ std::vector<T> flatten(std::vector<std::vector<T>> levels) {
 }
 
 // The coordinates themselves for the rectangle.
-std::vector<GLfloat> generateRectangle(Rectangle r) {
+std::vector<GLfloat> generateRectangle(Rectangle r, int layer) {
     std::vector<GLfloat> vertices {
-        r.x      , r.y      , 0.f, 0.f,
-        r.x + r.w, r.y      , 1.f, 0.f,
-        r.x + r.w, r.y + r.h, 1.f, 1.f,
-        r.x      , r.y + r.h, 0.f, 1.f
+        r.x      , r.y      , -layer / 100.f, 0.f, 0.f,
+        r.x + r.w, r.y      , -layer / 100.f, 1.f, 0.f,
+        r.x + r.w, r.y + r.h, -layer / 100.f, 1.f, 1.f,
+        r.x      , r.y + r.h, -layer / 100.f, 0.f, 1.f
     };
 
     return vertices;
 }
 
 // The coordinates themselves for a set of rectangles.
-std::vector<GLfloat> generateRectangles(std::vector<Rectangle> rs) {
+std::vector<GLfloat> generateRectangles(std::vector<Rectangle> rs, int layer) {
     std::vector<std::vector<GLfloat>> vs;
     for (auto it = rs.begin(); it != rs.end(); it++)
-        vs.push_back(generateRectangle(*it));
+        vs.push_back(generateRectangle(*it, layer));
     return flatten(vs);
 }
 
@@ -82,10 +82,11 @@ Render::Render(std::vector<GLfloat> vertices,
 
 // Constructing a new Render as a rectangle.
 Render::Render(Rectangle r,
+               int layer,
                GLenum type,
                Texture texture,
                Shader shader) :
-        Render(generateRectangle(r),
+        Render(generateRectangle(r, layer),
                rectangleOrder(),
                type,
                texture,
@@ -142,12 +143,12 @@ void Render::render(GLFWwindow* window) const {
     // Setting the vertex coordinate.
     GLint posAttrib = glGetAttribLocation(this->shader.getID(), "in_vertexCoord");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
 
     // Setting the texture coordinate.
     GLint texAttrib = glGetAttribLocation(this->shader.getID(), "in_texCoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
     // Setting the texture sampler.
     glActiveTexture(GL_TEXTURE0);

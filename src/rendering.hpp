@@ -17,10 +17,10 @@
 // Code //
 
 // The coordinates themselves for the rectangle.
-std::vector<GLfloat> generateRectangle(Rectangle);
+std::vector<GLfloat> generateRectangle(Rectangle, int);
 
 // The coordinates themselves for a set of rectangles.
-std::vector<GLfloat> generateRectangles(std::vector<Rectangle>);
+std::vector<GLfloat> generateRectangles(std::vector<Rectangle>, int);
 
 // The order of vertices for a rectangle.
 std::vector<GLuint> rectangleOrder();
@@ -50,7 +50,7 @@ public:
     Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, Texture, Shader);
 
     // Constructing a new Render as a rectangle.
-    Render(Rectangle, GLenum, Texture, Shader);
+    Render(Rectangle, int, GLenum, Texture, Shader);
 
     // Destroying this render.
     ~Render();

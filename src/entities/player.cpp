@@ -57,7 +57,7 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
 
 // Rendering this entity.
 void Player::render(GLFWwindow* window, Renders& renders) {
-    renders["player"]->updateVertices(generateRectangle(this->getPosition()),
+    renders["player"]->updateVertices(generateRectangle(this->getPosition(), 0),
                                       rectangleOrder(),
                                       GL_DYNAMIC_DRAW);
 }

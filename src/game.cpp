@@ -42,7 +42,7 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
         if (dt < 1.f / MAX_RENDERS_PER_SECOND)
             delta.sleep((int)((1.f / MAX_RENDERS_PER_SECOND - dt) * 1000.f));
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         gs.renderAll(window, r);
         renderAll(window, r);
@@ -62,17 +62,19 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     initializeGameState(gs);
 
     renders["player"] = new Render(gs.position,
+                                   0,
                                    GL_DYNAMIC_DRAW,
                                    assets.getTexture("res/player/01.png"),
                                    assets.getShader("res/game2d"));
 
-    renders["enemies"] = new Render(generateRectangles(gs.enemies),
+    renders["enemies"] = new Render(generateRectangles(gs.enemies, 1),
                                     rectangleOrders(gs.enemies.size()),
                                     GL_STATIC_DRAW,
                                     assets.getTexture("res/enemy/01.png"),
                                     assets.getShader("res/game2d"));
 
     renders["background"] = new Render(Rectangle(0, 0, 640, 480),
+                                       2,
                                        GL_STATIC_DRAW,
                                        assets.getTexture("res/background.png"),
                                        assets.getShader("res/game2d"));
