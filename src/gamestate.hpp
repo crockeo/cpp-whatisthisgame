@@ -9,6 +9,7 @@
 
 #include "rectangle.hpp"
 #include "rendering.hpp"
+#include "timer.hpp"
 
 //////////
 // Code //
@@ -40,6 +41,7 @@ public:
 struct GameState {
 private:
     std::unordered_map<std::string, Entity*> entities;
+    std::vector<Timer*> timers;
 
 public:
     Rectangle position;
@@ -54,6 +56,9 @@ public:
 
     // DESTROYING this GameState.
     ~GameState();
+
+    // Adding a timer to this GameState.
+    void addTimer(Timer*);
 
     // Updating every entity in this GameState.
     void updateAll(GLFWwindow*, const GameState&, float);

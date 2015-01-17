@@ -5,9 +5,12 @@
 // Includes //
 #include <unordered_map>
 #include <string>
+#include <vector>
 
+#include "res/animation.hpp"
 #include "res/texture.hpp"
 #include "res/shader.hpp"
+#include "timer.hpp"
 
 //////////
 // Code //
@@ -15,6 +18,7 @@
 // A class to encapsulate asset loading and referencing.
 class Assets {
 private:
+    std::unordered_map<std::string, Animation*> animations;
     std::unordered_map<std::string, Texture*> textures;
     std::unordered_map<std::string, Shader*> shaders;
 
@@ -29,10 +33,16 @@ public:
     ~Assets();
 
     // Adding different kinds of assets.
+    void addAnimation(std::string, std::vector<Texture>, float, bool);
+    void addAnimation(std::string, std::vector<Texture>, float);
     void addTexture(std::string);
     void addShader(std::string);
 
+    // Getting the vector of animation timers.
+    std::vector<Timer*> getAnimationTimers();
+
     // Getting different kind of assets.
+    Animation getAnimation(std::string) const;
     Texture getTexture(std::string) const;
     Shader getShader(std::string) const;
 };

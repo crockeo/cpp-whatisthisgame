@@ -30,8 +30,15 @@ GameState::~GameState() {
             delete std::get<1>(*it);
 }
 
+// Adding a timer to this GameState.
+void GameState::addTimer(Timer* timer) { this->timers.push_back(timer); }
+
 // Updating every entity in this GameState.
 void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
+    for (auto it = this->timers.begin(); it != this->timers.end(); it++)
+        if (*it != nullptr)
+            (*it)->update(dt);
+
     for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
         if (std::get<1>(*it) != nullptr)
             std::get<1>(*it)->update(window, gs, dt);

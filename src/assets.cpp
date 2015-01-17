@@ -15,6 +15,14 @@ Assets::~Assets() {
 }
 
 // Adding different kinds of assets.
+void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength, bool doesLoop) {
+    this->animations[path] = new Animation(textures, frameLength, doesLoop);
+}
+
+void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength) {
+    this->addAnimation(path, textures, frameLength);
+}
+
 void Assets::addTexture(std::string path) {
     this->textures[path] = new Texture(path);
 }
@@ -23,7 +31,19 @@ void Assets::addShader(std::string path) {
     this->shaders[path] = new Shader(path);
 }
 
+// Getting the vector of animation timers.
+std::vector<Timer*> Assets::getAnimationTimers() {
+    std::vector<Timer*> timers;
+
+    for (auto it = this->animations.begin(); it != this->animations.end(); it++)
+        if (std::get<1>(*it) != nullptr)
+            timers.push_back(std::get<1>(*it)->getTimer());
+
+    return timers;
+}
+
 // Getting different kind of assets.
+Animation Assets::getAnimation(std::string path) const { return *this->animations.at(path); }
 Texture Assets::getTexture(std::string path) const { return *this->textures.at(path); }
 Shader Assets::getShader(std::string path) const { return *this->shaders.at(path); }
 
