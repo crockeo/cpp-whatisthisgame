@@ -19,6 +19,7 @@ set(SOURCES
   src/assets.cpp
   src/config.cpp
   src/delta.cpp
+  src/timer.cpp
   src/game.cpp
   src/main.cpp
 )
