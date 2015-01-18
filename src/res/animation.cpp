@@ -15,6 +15,11 @@ Animation::Animation(std::vector<Texture> textures, float frameLength, bool does
     this->frameLength = frameLength;
     this->isOriginal  = true;
     this->doesLoop    = doesLoop;
+
+    if (this->doesLoop)
+        this->timer = new Timer(this->textures.size() * this->frameLength);
+    else
+        this->timer = new Timer();
 }
 
 // Creating a new animation with all of the above, assuming that it will
@@ -28,6 +33,7 @@ Animation::Animation(const Animation& anim) {
     this->frameLength = anim.frameLength;
     this->isOriginal  = false;
     this->doesLoop    = anim.doesLoop;
+    this->timer       = anim.timer;
 }
 
 // Destroying this thingy.

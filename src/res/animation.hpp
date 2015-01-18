@@ -19,7 +19,6 @@ private:
     bool isOriginal;
     bool doesLoop;
     Timer* timer;
-    int frame;
 
     // Calculating the current frame index.
     unsigned int calcCurrentFrameIndex() const;
