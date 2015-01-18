@@ -61,6 +61,15 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     this->position().y += this->dy * dt;
 }
 
+// Providing the initial render for this entity.
+void Player::initRender(GLFWwindow* window, const Assets& assets, Renders& renders) const {
+    renders["player"] = new Render(this->getPosition(),
+                                   0,
+                                   GL_DYNAMIC_DRAW,
+                                   assets.getAnimation("player"),
+                                   assets.getShader("res/game2d"));
+}
+
 // Rendering this entity.
 void Player::render(GLFWwindow* window, Renders& renders) const {
     renders["player"]->updateVertices(generateRectangle(this->getPosition(), 0),

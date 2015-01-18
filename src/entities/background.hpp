@@ -8,6 +8,7 @@
 
 #include "../gamestate.hpp"
 #include "../rendering.hpp"
+#include "../assets.hpp"
 
 //////////
 // Code //
@@ -24,6 +25,9 @@ public:
 
     // Updating this entity.
     void update(GLFWwindow*, const GameState&, float);
+
+    // Providing the initial render for this entity.
+    void initRender(GLFWwindow*, const Assets&, Renders&) const override;
 
     // Rendering this entity.
     void render(GLFWwindow*, Renders&) const override;

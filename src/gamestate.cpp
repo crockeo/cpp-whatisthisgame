@@ -50,10 +50,10 @@ void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
 }
 
 // Initializing all of the renders for the GameState.
-void GameState::initRenderAll(GLFWwindow* window, Renders& renders) const {
+void GameState::initRenderAll(GLFWwindow* window, const Assets& assets, Renders& renders) const {
     for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
         if (std::get<1>(*it) != nullptr)
-            std::get<1>(*it)->initRender(window, renders);
+            std::get<1>(*it)->initRender(window, assets, renders);
     }
 }
 

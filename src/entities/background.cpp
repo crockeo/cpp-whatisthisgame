@@ -21,6 +21,15 @@ void Background::update(GLFWwindow* window, const GameState& gs, float dt) {
     this->updateSize(window);
 }
 
+// Providing the initial render for this entity.
+void Background::initRender(GLFWwindow* window, const Assets& assets, Renders& renders) const {
+    renders["background"] = new Render(this->getPosition(),
+                                       2,
+                                       GL_DYNAMIC_DRAW,
+                                       assets.getTexture("res/background.png"),
+                                       assets.getShader("res/game2d"));
+}
+
 // Rendering this entity.
 void Background::render(GLFWwindow* window, Renders& renders) const {
     renders["background"]->updateVertices(generateRectangle(this->getPosition(), 0),

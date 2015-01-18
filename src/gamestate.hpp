@@ -9,6 +9,7 @@
 
 #include "rectangle.hpp"
 #include "rendering.hpp"
+#include "assets.hpp"
 #include "timer.hpp"
 
 //////////
@@ -31,7 +32,7 @@ public:
     virtual void update(GLFWwindow*, const GameState&, float) { }
 
     // Initializing the render for this entity.
-    virtual void initRender(GLFWwindow*, Renders&) const { }
+    virtual void initRender(GLFWwindow*, const Assets&, Renders&) const { }
 
     // Rendering this entity.
     virtual void render(GLFWwindow*, Renders&) const { }
@@ -70,7 +71,7 @@ public:
     void updateAll(GLFWwindow*, const GameState&, float);
 
     // Initializing all of the renders for the GameState.
-    void initRenderAll(GLFWwindow*, Renders&) const;
+    void initRenderAll(GLFWwindow*, const Assets&, Renders&) const;
 
     // Rendering every entity in this GameState.
     void renderAll(GLFWwindow*, Renders&) const;
