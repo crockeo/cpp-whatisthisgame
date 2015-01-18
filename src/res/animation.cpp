@@ -5,7 +5,10 @@
 
 // Calculating the current frame index.
 unsigned int Animation::calcCurrentFrameIndex() const {
-    return 0;
+    int frame = this->timer->getTime() / frameLength;
+    if (frame >= this->textures.size())
+        return this->textures.size() - 1;
+    return frame;
 }
 
 // Creating a new animation with its frames, its frame length, and if it
