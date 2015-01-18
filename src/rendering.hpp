@@ -9,7 +9,7 @@
 #include <vector>
 #include <tuple>
 
-#include "res/texture.hpp"
+#include "res/texable.hpp"
 #include "res/shader.hpp"
 #include "rectangle.hpp"
 
@@ -38,7 +38,7 @@ private:
     GLuint vbo;
     GLuint ebo;
 
-    const Texture& texture;
+    const Texable& texture;
     const Shader& shader;
 
     GLfloat* vertices;
@@ -50,10 +50,10 @@ public:
     Render(const Render&) = delete;
 
     // Constructing a new Render with a set of points, a texture, and a shader.
-    Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, const Texture&, const Shader&);
+    Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, const Texable&, const Shader&);
 
     // Constructing a new Render as a rectangle.
-    Render(Rectangle, int, GLenum, const Texture&, const Shader&);
+    Render(Rectangle, int, GLenum, const Texable&, const Shader&);
 
     // Destroying this render.
     ~Render();

@@ -6,13 +6,14 @@
 #include <vector>
 
 #include "../timer.hpp"
+#include "texable.hpp"
 #include "texture.hpp"
 
 //////////
 // Code //
 
 // A class to represent an animation.
-class Animation {
+class Animation : public Texable {
 private:
     std::vector<Texture> textures;
     float frameLength;
@@ -45,7 +46,7 @@ public:
     Texture getCurrentFrame() const;
 
     // Getting the current texture ID.
-    GLuint getID() const;
+    GLuint getID() const override;
 };
 
 #endif

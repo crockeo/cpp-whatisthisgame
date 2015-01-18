@@ -67,7 +67,7 @@ std::vector<GLuint> rectangleOrders(int num) {
 Render::Render(std::vector<GLfloat> vertices,
                std::vector<GLuint> order,
                GLenum type,
-               const Texture& texture,
+               const Texable& texture,
                const Shader& shader) :
         texture(texture),
         shader(shader) {
@@ -84,7 +84,7 @@ Render::Render(std::vector<GLfloat> vertices,
 Render::Render(Rectangle r,
                int layer,
                GLenum type,
-               const Texture& texture,
+               const Texable& texture,
                const Shader& shader) :
         Render(generateRectangle(r, layer),
                rectangleOrder(),

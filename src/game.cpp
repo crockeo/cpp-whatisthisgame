@@ -65,7 +65,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     renders["player"] = new Render(gs.position,
                                    0,
                                    GL_DYNAMIC_DRAW,
-                                   assets.getTexture("res/player/01.png"),
+                                   assets.getAnimation("player"),
                                    assets.getShader("res/game2d"));
 
     renders["enemies"] = new Render(generateRectangles(gs.enemies, 1),

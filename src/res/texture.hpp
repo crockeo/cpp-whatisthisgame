@@ -6,11 +6,13 @@
 #include <GL/glew.h>
 #include <string>
 
+#include "texable.hpp"
+
 //////////
 // Code //
 
 // A class to represent a texture.
-class Texture {
+class Texture : public Texable {
 private:
     int width, height;
     bool original;
@@ -27,7 +29,7 @@ public:
     ~Texture();
 
     // Accessing the texture id.
-    GLuint getID() const;
+    GLuint getID() const override;
 
     // Checking if the texture is good.
     bool good() const;
