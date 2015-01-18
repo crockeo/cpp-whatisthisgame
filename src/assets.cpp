@@ -45,9 +45,9 @@ std::vector<Timer*> Assets::getAnimationTimers() const {
 }
 
 // Getting different kind of assets.
-Animation Assets::getAnimation(std::string path) const { return *this->animations.at(path); }
-Texture Assets::getTexture(std::string path) const { return *this->textures.at(path); }
-Shader Assets::getShader(std::string path) const { return *this->shaders.at(path); }
+const Animation& Assets::getAnimation(std::string path) const { return *this->animations.at(path); }
+const Texture& Assets::getTexture(std::string path) const { return *this->textures.at(path); }
+const Shader& Assets::getShader(std::string path) const { return *this->shaders.at(path); }
 
 // Loading the default set of assets into the ref.
 void loadAssets(Assets& assets) {

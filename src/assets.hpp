@@ -42,9 +42,9 @@ public:
     std::vector<Timer*> getAnimationTimers() const;
 
     // Getting different kind of assets.
-    Animation getAnimation(std::string) const;
-    Texture getTexture(std::string) const;
-    Shader getShader(std::string) const;
+    const Animation& getAnimation(std::string) const;
+    const Texture& getTexture(std::string) const;
+    const Shader& getShader(std::string) const;
 };
 
 // Loading the default set of assets into the ref.

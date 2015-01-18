@@ -38,8 +38,8 @@ private:
     GLuint vbo;
     GLuint ebo;
 
-    Texture texture;
-    Shader shader;
+    const Texture& texture;
+    const Shader& shader;
 
     GLfloat* vertices;
     GLuint* order;
@@ -50,10 +50,10 @@ public:
     Render(const Render&) = delete;
 
     // Constructing a new Render with a set of points, a texture, and a shader.
-    Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, Texture, Shader);
+    Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, const Texture&, const Shader&);
 
     // Constructing a new Render as a rectangle.
-    Render(Rectangle, int, GLenum, Texture, Shader);
+    Render(Rectangle, int, GLenum, const Texture&, const Shader&);
 
     // Destroying this render.
     ~Render();
