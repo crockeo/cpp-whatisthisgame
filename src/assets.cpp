@@ -32,7 +32,7 @@ void Assets::addShader(std::string path) {
 }
 
 // Getting the vector of animation timers.
-std::vector<Timer*> Assets::getAnimationTimers() {
+std::vector<Timer*> Assets::getAnimationTimers() const {
     std::vector<Timer*> timers;
 
     for (auto it = this->animations.begin(); it != this->animations.end(); it++)

@@ -77,6 +77,6 @@ public:
 };
 
 // Constructing a default GameState.
-void initializeGameState(GameState&);
+void initializeGameState(GameState&, const std::vector<Timer*>&);
 
 #endif

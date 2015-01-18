@@ -72,6 +72,9 @@ Entity* GameState::getEntity(std::string name) const {
 }
 
 // Constructing a default GameState.
-void initializeGameState(GameState& gs) {
+void initializeGameState(GameState& gs, const std::vector<Timer*>& timers) {
+    for (auto it = timers.begin(); it != timers.end(); it++)
+        gs.addTimer(*it);
+
     gs.addEntity("player", new Player(0, 0, 50, 50));
 }
