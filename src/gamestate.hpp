@@ -21,7 +21,7 @@ class Entity;
 // A base entity class.
 class Entity {
 private:
-    Rectangle position;
+    Rectangle pos;
 
 public:
     // Constructing an entity at a given location.
@@ -30,11 +30,17 @@ public:
     // Updating this entity.
     virtual void update(GLFWwindow*, const GameState&, float) { }
 
+    // Initializing the render for this entity.
+    virtual void initRender(GLFWwindow*, Renders&) const { }
+
     // Rendering this entity.
-    virtual void render(GLFWwindow*, Renders&) { }
+    virtual void render(GLFWwindow*, Renders&) const { }
 
     // Returning a copy of the rectangle.
-    Rectangle& getPosition();
+    Rectangle getPosition() const;
+
+    // Returning a reference to the rectangle.
+    Rectangle& position();
 };
 
 // A type to represent the internal state of the game universe.
@@ -62,6 +68,9 @@ public:
 
     // Updating every entity in this GameState.
     void updateAll(GLFWwindow*, const GameState&, float);
+
+    // Initializing all of the renders for the GameState.
+    void initRenderAll(GLFWwindow*, Renders&) const;
 
     // Rendering every entity in this GameState.
     void renderAll(GLFWwindow*, Renders&) const;

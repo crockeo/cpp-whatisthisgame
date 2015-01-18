@@ -8,8 +8,8 @@ void Background::updateSize(GLFWwindow* window) {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
 
-    this->getPosition().w = width;
-    this->getPosition().h = height;
+    this->position().w = width;
+    this->position().h = height;
 }
 
 // Creating a new background from GLFWwindow.
@@ -22,7 +22,7 @@ void Background::update(GLFWwindow* window, const GameState& gs, float dt) {
 }
 
 // Rendering this entity.
-void Background::render(GLFWwindow* window, Renders& renders) {
+void Background::render(GLFWwindow* window, Renders& renders) const {
     renders["background"]->updateVertices(generateRectangle(this->getPosition(), 0),
                                           rectangleOrder(),
                                           GL_DYNAMIC_DRAW);

@@ -10,10 +10,13 @@
 
 // Constructing an entity at a given location.
 Entity::Entity(Rectangle r) :
-        position(r) { }
+        pos(r) { }
 
 // Returning a copy of the rectangle.
-Rectangle& Entity::getPosition() { return this->position; }
+Rectangle Entity::getPosition() const { return this->pos; }
+
+// Returning a reference to the rectangle.
+Rectangle& Entity::position() { return this->pos; }
 
 // Constructing a new game state.
 GameState::GameState() :
@@ -43,6 +46,14 @@ void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
     for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
         if (std::get<1>(*it) != nullptr)
             std::get<1>(*it)->update(window, gs, dt);
+    }
+}
+
+// Initializing all of the renders for the GameState.
+void GameState::initRenderAll(GLFWwindow* window, Renders& renders) const {
+    for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
+        if (std::get<1>(*it) != nullptr)
+            std::get<1>(*it)->initRender(window, renders);
     }
 }
 

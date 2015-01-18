@@ -26,7 +26,7 @@ public:
     void update(GLFWwindow*, const GameState&, float);
 
     // Rendering this entity.
-    void render(GLFWwindow*, Renders&);
+    void render(GLFWwindow*, Renders&) const override;
 };
 
 #endif

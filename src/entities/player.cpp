@@ -57,12 +57,12 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     if (!mx && this->dx > -MIN_SPEED && this->dx < MIN_SPEED)
         this->dx = 0;
 
-    this->getPosition().x += this->dx * dt;
-    this->getPosition().y += this->dy * dt;
+    this->position().x += this->dx * dt;
+    this->position().y += this->dy * dt;
 }
 
 // Rendering this entity.
-void Player::render(GLFWwindow* window, Renders& renders) {
+void Player::render(GLFWwindow* window, Renders& renders) const {
     renders["player"]->updateVertices(generateRectangle(this->getPosition(), 0),
                                       rectangleOrder(),
                                       GL_DYNAMIC_DRAW);
