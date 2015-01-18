@@ -96,5 +96,5 @@ void loadAssets(Assets& assets) {
         assets.getTexture("res/player/04.png")
     };
 
-    assets.addAnimation("player", player, 0.3);
+    assets.addAnimation("player", player, 0.2f);
 }
