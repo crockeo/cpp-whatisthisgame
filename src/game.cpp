@@ -76,7 +76,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
 
     renders["background"] = new Render(Rectangle(0, 0, 640, 480),
                                        2,
-                                       GL_STATIC_DRAW,
+                                       GL_DYNAMIC_DRAW,
                                        assets.getTexture("res/background.png"),
                                        assets.getShader("res/game2d"));
 

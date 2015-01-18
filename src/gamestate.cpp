@@ -2,6 +2,7 @@
 
 //////////////
 // Includes //
+#include "entities/background.hpp"
 #include "entities/player.hpp"
 
 //////////
@@ -76,5 +77,6 @@ void initializeGameState(GameState& gs, const std::vector<Timer*>& timers) {
     for (auto it = timers.begin(); it != timers.end(); it++)
         gs.addTimer(*it);
 
+    gs.addEntity("background", new Background());
     gs.addEntity("player", new Player(0, 0, 50, 50));
 }

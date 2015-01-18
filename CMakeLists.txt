@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 # Setting the set of sources.
 set(SOURCES
+  src/entities/background.cpp
   src/entities/player.cpp
   src/res/animation.cpp
   src/res/texture.cpp
