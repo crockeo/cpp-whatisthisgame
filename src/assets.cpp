@@ -8,6 +8,8 @@ Assets::Assets() { }
 
 // Destructing assets.
 Assets::~Assets() {
+    for (auto it = this->animations.begin(); it != this->animations.end(); it++)
+        delete std::get<1>(*it);
     for (auto it = this->textures.begin(); it != this->textures.end(); it++)
         delete std::get<1>(*it);
     for (auto it = this->shaders.begin(); it != this->shaders.end(); it++)
@@ -20,7 +22,7 @@ void Assets::addAnimation(std::string path, std::vector<Texture> textures, float
 }
 
 void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength) {
-    this->addAnimation(path, textures, frameLength);
+    this->addAnimation(path, textures, frameLength, true);
 }
 
 void Assets::addTexture(std::string path) {
@@ -85,4 +87,14 @@ void loadAssets(Assets& assets) {
     assets.addTexture("res/player/02.png");
     assets.addTexture("res/player/03.png");
     assets.addTexture("res/player/04.png");
+
+    // Adding the player animation.
+    std::vector<Texture> player {
+        assets.getTexture("res/player/01.png"),
+        assets.getTexture("res/player/02.png"),
+        assets.getTexture("res/player/03.png"),
+        assets.getTexture("res/player/04.png")
+    };
+
+    assets.addAnimation("player", player, 0.3);
 }
