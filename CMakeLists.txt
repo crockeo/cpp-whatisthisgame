@@ -13,6 +13,7 @@ set(CMAKE_CXX_FLAGS "-O2 -std=c++11 ${CMAKE_CXX_FLAGS}")
 
 # Setting the set of sources.
 set(SOURCES
+  src/entities/bulletcontroller.cpp
   src/entities/background.cpp
   src/entities/player.cpp
   src/res/animation.cpp
