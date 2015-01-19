@@ -63,7 +63,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     initializeGameState(gs, timers);
     gs.initRenderAll(window, assets, renders);
 
-    renders["enemies"] = new Render(generateRectangles(gs.enemies, 1),
+    renders["enemies"] = new Render(generateRectangles(gs.enemies),
                                     rectangleOrders(gs.enemies.size()),
                                     GL_STATIC_DRAW,
                                     assets.getTexture("res/enemy/01.png"),

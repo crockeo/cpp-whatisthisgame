@@ -20,10 +20,10 @@
 const static float MAX_LAYERS = 24.f;
 
 // The coordinates themselves for the rectangle.
-std::vector<GLfloat> generateRectangle(Rectangle, int);
+std::vector<GLfloat> generateRectangle(Rectangle);
 
 // The coordinates themselves for a set of rectangles.
-std::vector<GLfloat> generateRectangles(std::vector<Rectangle>, int);
+std::vector<GLfloat> generateRectangles(std::vector<Rectangle>);
 
 // The order of vertices for a rectangle.
 std::vector<GLuint> rectangleOrder();
@@ -53,7 +53,7 @@ public:
     Render(std::vector<GLfloat>, std::vector<GLuint>, GLenum, const Texable&, const Shader&);
 
     // Constructing a new Render as a rectangle.
-    Render(Rectangle, int, GLenum, const Texable&, const Shader&);
+    Render(Rectangle, GLenum, const Texable&, const Shader&);
 
     // Destroying this render.
     ~Render();
