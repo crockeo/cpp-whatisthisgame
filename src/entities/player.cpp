@@ -3,9 +3,6 @@
 //////////
 // Code //
 
-#define SPEED 500
-#define MIN_SPEED 1
-
 // Creating a new player at a given location.
 Player::Player(float x, float y) :
         Entity(Rectangle(x, y, Player::width, Player::height)) {
@@ -16,25 +13,30 @@ Player::Player(float x, float y) :
 void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     bool my = false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        this->dy += ((this->dy < 0 ? SPEED / 10 : 0) + SPEED) * dt;
+        this->dy += ((this->dy < 0 ? Player::decel_speed : 0) + Player::speed) * dt;
         my = true;
     }
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        this->dy -= ((this->dy > 0 ? SPEED / 10 : 0) + SPEED) * dt;
+        this->dy -= ((this->dy > 0 ? Player::decel_speed : 0) + Player::speed) * dt;
         my = true;
     }
 
     if (!my) {
         if (this->dy > 0) {
-            this->dy -= SPEED / 10 * dt;
+            this->dy -= Player::decel_speed * dt;
         } else {
-            this->dy += SPEED / 10 * dt;
+            this->dy += Player::decel_speed * dt;
         }
     }
 
-    if (!my && this->dy > -MIN_SPEED && this->dy < MIN_SPEED)
+    if (!my && this->dy > -Player::min_speed && this->dy < Player::min_speed)
         this->dy = 0;
+
+    if (this->dy >  Player::max_speed)
+        this->dy =  Player::max_speed;
+    if (this->dy < -Player::max_speed)
+        this->dy = -Player::max_speed;
 
     int height;
     glfwGetWindowSize(window, nullptr, &height);

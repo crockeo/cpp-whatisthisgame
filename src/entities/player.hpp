@@ -19,8 +19,12 @@ private:
     float dy;
 
 public:
-    constexpr static float width  = 60;
-    constexpr static float height = 60;
+    constexpr static float speed       = 750;
+    constexpr static float decel_speed = speed / 5;
+    constexpr static float max_speed   = speed * 4;
+    constexpr static float min_speed   = 1;
+    constexpr static float width       = 60;
+    constexpr static float height      = 60;
 
     // Creating a new player at a given location.
     Player(float, float);
