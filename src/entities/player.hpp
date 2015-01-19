@@ -19,9 +19,9 @@ private:
     float dy;
 
 public:
-    constexpr static float speed       = 750;
-    constexpr static float decel_speed = speed / 5;
-    constexpr static float max_speed   = speed * 4;
+    constexpr static float speed       = 2250;
+    constexpr static float decel_speed = speed / 2;
+    constexpr static float max_speed   = speed / 4;
     constexpr static float min_speed   = 1;
     constexpr static float width       = 60;
     constexpr static float height      = 60;
