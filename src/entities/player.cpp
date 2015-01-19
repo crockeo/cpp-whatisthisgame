@@ -16,12 +16,12 @@ Player::Player(float x, float y) :
 void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     bool my = false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        this->dy += SPEED * dt;
+        this->dy += ((this->dy < 0 ? SPEED / 10 : 0) + SPEED) * dt;
         my = true;
     }
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        this->dy -= SPEED * dt;
+        this->dy -= ((this->dy > 0 ? SPEED / 10 : 0) + SPEED) * dt;
         my = true;
     }
 
