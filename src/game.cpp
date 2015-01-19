@@ -60,7 +60,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
 
     GameState gs;
     std::vector<Timer*> timers = assets.getAnimationTimers();
-    initializeGameState(gs, timers);
+    initializeGameState(window, gs, timers);
     gs.initRenderAll(window, assets, renders);
 
     renders[1]["enemies"] = new Render(generateRectangles(gs.enemies),

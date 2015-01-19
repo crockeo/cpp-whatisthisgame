@@ -84,10 +84,12 @@ Entity* GameState::getEntity(std::string name) const {
 }
 
 // Constructing a default GameState.
-void initializeGameState(GameState& gs, const std::vector<Timer*>& timers) {
+void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<Timer*>& timers) {
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
     for (auto it = timers.begin(); it != timers.end(); it++)
         gs.addTimer(*it);
 
     gs.addEntity("background", new Background());
-    gs.addEntity("player", new Player(0, 0, 50, 50));
+    gs.addEntity("player", new Player(10, height / 2 - Player::height / 2));
 }

@@ -87,6 +87,6 @@ public:
 };
 
 // Constructing a default GameState.
-void initializeGameState(GameState&, const std::vector<Timer*>&);
+void initializeGameState(GLFWwindow*, GameState&, const std::vector<Timer*>&);
 
 #endif

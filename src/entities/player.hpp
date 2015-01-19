@@ -16,11 +16,14 @@
 // A class to represent the player.
 class Player : public Entity {
 private:
-    float dx, dy;
+    float dy;
 
 public:
+    constexpr static float width  = 60;
+    constexpr static float height = 60;
+
     // Creating a new player at a given location.
-    Player(float, float, float, float);
+    Player(float, float);
 
     // Updating this entity.
     void update(GLFWwindow*, const GameState&, float);
