@@ -20,7 +20,7 @@ $ ./build/bin/whatisthisgame
 * Move the render function from the `other` shader program to the `game2d`
   shader program. **DONE**
 * Make the shader loading (for the fragment output) more dynamic. **DONE**
-* Make layering work.
+* Make layering work. **DONE**
 
 ### License
 
