@@ -36,6 +36,19 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     if (!my && this->dy > -MIN_SPEED && this->dy < MIN_SPEED)
         this->dy = 0;
 
+    int height;
+    glfwGetWindowSize(window, nullptr, &height);
+
+    if (this->position().y < 0) {
+        this->dy /= -3;
+        this->position().y = 0;
+    }
+
+    if (this->position().y + this->position().h > height) {
+        this->dy /= -3;
+        this->position().y = height - this->position().h;
+    }
+
     this->position().y += this->dy * dt;
 }
 
