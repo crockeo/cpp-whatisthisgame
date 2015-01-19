@@ -23,15 +23,15 @@ void Background::update(GLFWwindow* window, const GameState& gs, float dt) {
 
 // Providing the initial render for this entity.
 void Background::initRender(GLFWwindow* window, const Assets& assets, Renders& renders) const {
-    renders["background"] = new Render(this->getPosition(),
-                                       GL_DYNAMIC_DRAW,
-                                       assets.getTexture("res/background.png"),
-                                       assets.getShader("res/game2d"));
+    renders[2]["background"] = new Render(this->getPosition(),
+                                          GL_DYNAMIC_DRAW,
+                                          assets.getTexture("res/background.png"),
+                                          assets.getShader("res/game2d"));
 }
 
 // Rendering this entity.
 void Background::render(GLFWwindow* window, Renders& renders) const {
-    renders["background"]->updateVertices(generateRectangle(this->getPosition()),
-                                          rectangleOrder(),
-                                          GL_DYNAMIC_DRAW);
+    renders[2]["background"]->updateVertices(generateRectangle(this->getPosition()),
+                                             rectangleOrder(),
+                                             GL_DYNAMIC_DRAW);
 }

@@ -157,8 +157,28 @@ void Render::render(GLFWwindow* window) const {
     glDrawElements(GL_TRIANGLES, this->points, GL_UNSIGNED_INT, 0);
 }
 
-// Rendering every single Render within a Renders.
-void renderAll(GLFWwindow* window, const Renders& renders) {
-    for (auto it = renders.begin(); it != renders.end(); it++)
-        std::get<1>(*it)->render(window);
+// Constructing a set of renders with a given size.
+Renders::Renders(int size) {
+    for (int i = 0; i < size; i++)
+        this->renders.push_back(new std::unordered_map<std::string, Render*>());
+}
+
+// Destroying the set of renders.
+Renders::~Renders() {
+    // TODO: Remove.
+}
+
+// Getting a specific map.
+std::unordered_map<std::string, Render*>& Renders::operator[](int i) {
+    return *this->renders[i];
+}
+
+// Rendering this Renders.
+void Renders::renderAll(GLFWwindow* window) const {
+    for (int i = this->renders.size() - 1; i >= 0; i--) {
+        std::unordered_map<std::string, Render*>* r = this->renders[i];
+
+        for (auto it = r->begin(); it != r->end(); it++)
+            std::get<1>(*it)->render(window);
+    }
 }

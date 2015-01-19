@@ -35,7 +35,7 @@ void update(GLFWwindow* window, Config cfg, const bool& running, GameState& gs) 
 }
 
 // The function to perform rendering.
-void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs, Renders& r) {
+void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets, const GameState& gs, Renders& renders) {
     Delta delta;
     while (running) {
         float dt = delta.since();
@@ -44,8 +44,8 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        gs.renderAll(window, r);
-        renderAll(window, r);
+        gs.renderAll(window, renders);
+        renders.renderAll(window);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -56,18 +56,18 @@ void render(GLFWwindow* window, Config cfg, bool& running, const Assets& assets,
 // Starting the update and render threads.
 void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     bool running = true;
-    Renders renders;
+    Renders renders(5);
 
     GameState gs;
     std::vector<Timer*> timers = assets.getAnimationTimers();
     initializeGameState(gs, timers);
     gs.initRenderAll(window, assets, renders);
 
-    renders["enemies"] = new Render(generateRectangles(gs.enemies),
-                                    rectangleOrders(gs.enemies.size()),
-                                    GL_STATIC_DRAW,
-                                    assets.getTexture("res/enemy/01.png"),
-                                    assets.getShader("res/game2d"));
+    renders[1]["enemies"] = new Render(generateRectangles(gs.enemies),
+                                       rectangleOrders(gs.enemies.size()),
+                                       GL_STATIC_DRAW,
+                                       assets.getTexture("res/enemy/01.png"),
+                                       assets.getShader("res/game2d"));
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
     render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), renders);

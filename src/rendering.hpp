@@ -65,10 +65,31 @@ public:
     void render(GLFWwindow*) const;
 };
 
-// A type to define a set of Renders.
-typedef std::unordered_map<std::string, Render*> Renders;
+// A set of Renders to perform on every tick.
 
-// Rendering every single Render within a Renders.
-void renderAll(GLFWwindow*, const Renders&);
+class Renders {
+private:
+    std::vector<std::unordered_map<std::string, Render*>*> renders;
+
+public:
+    // Keeping the Renders from being copied or set.
+    Renders(const Renders&) = delete;
+    Renders& operator=(const Renders&) = delete;
+
+    // Constructing a set of renders with a given size.
+    Renders(int);
+
+    // Destroying the set of renders.
+    ~Renders();
+    
+    // Getting a specific map.
+    std::unordered_map<std::string, Render*>& operator[](int);
+
+    // Rendering this Renders.
+    void renderAll(GLFWwindow*) const;
+};
+
+// A type to define a set of Renders.
+//typedef std::unordered_map<std::string, Render*> Renders;
 
 #endif
