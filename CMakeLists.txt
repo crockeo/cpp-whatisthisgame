@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(whatisthisgame)
 
+# Finding cmake files.
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
+
 # Setting up some project flags.
 set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/build/bin")
 set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/build/lib")
 
 # Setting C++11.
-set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-O2 -std=c++11 ${CMAKE_CXX_FLAGS}")
 
 # Setting the set of sources.
 set(SOURCES
@@ -30,19 +33,25 @@ set(SOURCES
 add_executable(whatisthisgame ${SOURCES})
 
 # Looking for OpenGL & GLFW.
+find_package(freetype REQUIRED)
 find_package(opengl REQUIRED)
+find_package(ftgl REQUIRED)
 find_package(glew REQUIRED)
 find_package(glfw REQUIRED)
 find_package(png REQUIRED)
 
 # Adding the include directories.
-include_directories(${OPENGL_INCLUDE_DIR}
+include_directories(${FREETYPE_INCLUDE_DIR}
+                    ${OPENGL_INCLUDE_DIR}
+                    ${FTGL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIR}
                     ${GLFW_INCLUDE_DIR}
                     ${PNG_INCLUDE_DIR})
 
 # Linking the libraries.
-target_link_libraries(whatisthisgame ${OPENGL_LIBRARY}
+target_link_libraries(whatisthisgame ${FREETYPE_LIBRARY}
+                                     ${OPENGL_LIBRARY}
+                                     ${FTGL_LIBRARY}
                                      ${GLEW_LIBRARY}
                                      ${GLFW_LIBRARY}
                                      ${PNG_LIBRARY})
