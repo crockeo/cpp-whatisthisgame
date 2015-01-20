@@ -21,8 +21,8 @@ private:
     void* bulletcontroller;
 
 public:
-    constexpr static float width  = 30;
-    constexpr static float height = 20;
+    constexpr static float width  = 32;
+    constexpr static float height = 16;
     constexpr static float speed  = 500;
 
     // Constructing a new bullet at a given location.

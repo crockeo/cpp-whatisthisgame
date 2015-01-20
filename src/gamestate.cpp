@@ -3,6 +3,7 @@
 //////////////
 // Includes //
 #include "entities/bulletcontroller.hpp"
+#include "entities/scoretracker.hpp"
 #include "entities/background.hpp"
 #include "entities/player.hpp"
 
@@ -92,6 +93,7 @@ void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<Ti
         gs.addTimer(*it);
 
     gs.addEntity("bulletcontroller", new BulletController());
+    gs.addEntity("scoretracker", new ScoreTracker());
     gs.addEntity("background", new Background());
     gs.addEntity("player", new Player(10, height / 2 - Player::height / 2));
 }
