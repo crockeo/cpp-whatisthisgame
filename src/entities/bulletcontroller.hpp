@@ -5,6 +5,7 @@
 // Includes //
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <set>
 
 #include "../gamestate.hpp"
 #include "../rendering.hpp"
@@ -18,6 +19,7 @@
 class BulletController : public Entity {
 private:
     std::vector<Bullet*> bullets;
+    std::set<int> marks;
     Timer timer;
 
 public:
@@ -28,6 +30,12 @@ public:
 
     // Destroying this BulletController.
     ~BulletController();
+
+    // Marking a given index to be killed off.
+    void mark(int);
+
+    // Killing off all of the marked bullets.
+    void kill();
 
     // Updating the BulletController.
     void update(GLFWwindow*, const GameState&, float) override;
