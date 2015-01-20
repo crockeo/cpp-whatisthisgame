@@ -27,8 +27,12 @@ BulletController::~BulletController() {
 void BulletController::update(GLFWwindow* window, const GameState& gs, float dt) {
     Player* p = (Player*)gs.getEntity("player");
 
-    if (p->isShooting())
+    this->timer.update(dt);
+
+    if (timer.getTime() > BulletController::spawnRate && p->isShooting()) {
+        timer.reset();
         this->bullets.push_back(new Bullet(p->getPosition().x, p->getPosition().y));
+    }
 
     for (auto it = this->bullets.begin(); it != this->bullets.end(); it++)
         (*it)->update(window, gs, dt);

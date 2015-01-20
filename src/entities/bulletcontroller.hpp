@@ -18,8 +18,11 @@
 class BulletController : public Entity {
 private:
     std::vector<Bullet*> bullets;
+    Timer timer;
 
 public:
+    constexpr static float spawnRate = 0.3f;
+
     // Creating a new, empty BulletController.
     BulletController();
 
