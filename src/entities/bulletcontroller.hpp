@@ -9,15 +9,22 @@
 #include "../gamestate.hpp"
 #include "../rendering.hpp"
 #include "../assets.hpp"
+#include "bullet.hpp"
 
 //////////
 // Code //
 
 // An entity that controls the set of bullets.
 class BulletController : public Entity {
+private:
+    std::vector<Bullet*> bullets;
+
 public:
-    // Creating a new, empty BulletContainer.
+    // Creating a new, empty BulletController.
     BulletController();
+
+    // Destroying this BulletController.
+    ~BulletController();
 
     // Updating the BulletController.
     void update(GLFWwindow*, const GameState&, float) override;
