@@ -3,11 +3,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cstdlib>
 
 #include "res/texture.hpp"
 #include "res/shader.hpp"
 #include "assets.hpp"
 #include "config.hpp"
+#include "delta.hpp"
 #include "game.hpp"
 
 //////////
@@ -75,6 +77,7 @@ bool startEngine(Config cfg) {
 
 // The entry point to the application.
 int main() {
+    srand(static_cast<unsigned int>(currentSystemTime()));
     if (startEngine(Config(640, 480, false))) {
         std::cout << "Failed to start the engine." << std::endl;
         return 1;

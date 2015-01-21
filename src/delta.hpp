@@ -4,6 +4,9 @@
 //////////
 // Code //
 
+// Getting the current system time as a float.
+unsigned long long currentSystemTime();
+
 // A class to encapsulate modeling the delta time between updates.
 class Delta {
 private:

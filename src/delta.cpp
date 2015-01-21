@@ -9,7 +9,7 @@
 // Code //
 
 // Getting the current system time as a float.
-int currentSystemTime() {
+unsigned long long currentSystemTime() {
     auto now = std::chrono::system_clock::now();
     return std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
 }
