@@ -5,6 +5,8 @@
 // Includes //
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <vector>
+#include <set>
 
 #include "../gamestate.hpp"
 #include "../timer.hpp"
@@ -19,6 +21,7 @@ private:
     Timer timer;
     float nextTime;
     std::vector<Enemy*> enemies;
+    std::set<int> marks;
 
     // Setting the next time and resetting the timer.
     void setNextTime();
@@ -32,6 +35,12 @@ public:
 
     // CONTROLLING THINE ENEMIES.
     EnemyController();
+
+    // Marking an enemy to be killed.
+    void mark(int);
+
+    // Killing and cleaning up the enemies.
+    void kill();
 
     // Updating the set of enemies.
     void update(GLFWwindow*, const GameState&, float) override;

@@ -27,13 +27,32 @@ void EnemyController::addEnemy(GLFWwindow* window) {
     float minY =          size / 2;
     float maxY = height - size / 2;
 
-    this->enemies.push_back(new Enemy(width + size / 2, randomFloat(minY, maxY), size));
+    this->enemies.push_back(new Enemy(width + size / 2,
+                                      randomFloat(minY, maxY),
+                                      size,
+                                      this->enemies.size(),
+                                      this));
 }
 
 // CONTROLLING THINE ENEMIES.
 EnemyController::EnemyController() :
         Entity(Rectangle(0, 0, 0, 0)) {
     this->setNextTime();
+}
+
+// Marking an enemy to be killed.
+void EnemyController::mark(int index) {
+    this->marks.insert(index);
+}
+
+// Killing and cleaning up the enemies.
+void EnemyController::kill() {
+    for (auto it = this->marks.begin(); it != this->marks.end(); it++) {
+        delete enemies.at(*it);
+        enemies.at(*it) = nullptr;
+    }
+
+    this->marks.clear();
 }
 
 // Updating the set of enemies.
@@ -44,7 +63,7 @@ void EnemyController::update(GLFWwindow* window, const GameState& gs, float dt) 
         this->setNextTime();
     }
 
-    // TODO: Mark and kill enemy folk.
+    this->kill();
 
     for (auto it = this->enemies.begin(); it != this->enemies.end(); it++)
         if (*it != nullptr)

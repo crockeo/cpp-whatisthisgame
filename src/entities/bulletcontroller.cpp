@@ -31,7 +31,7 @@ void BulletController::mark(int index) {
 // Killing off all of the marked bullets.
 void BulletController::kill() {
     for (auto it = this->marks.begin(); it != this->marks.end(); it++) {
-       delete bullets.at(*it);
+        delete bullets.at(*it);
         bullets.at(*it) = nullptr;
     }
 
