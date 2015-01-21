@@ -79,6 +79,15 @@ void loadAssets(Assets& assets) {
     assets.addTexture("res/enemy/02.png");
     assets.addTexture("res/enemy/03.png");
 
+    // Adding the enemy animation.
+    std::vector<Texture> enemy {
+        assets.getTexture("res/enemy/01.png"),
+        assets.getTexture("res/enemy/02.png"),
+        assets.getTexture("res/enemy/03.png")
+    };
+
+    assets.addAnimation("enemy", enemy, 0.2f);
+
     // The game shader.
     assets.addShader("res/game2d");
 

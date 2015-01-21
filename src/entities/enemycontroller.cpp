@@ -54,7 +54,7 @@ void EnemyController::initRender(GLFWwindow* window, const Assets& assets, Rende
     renders[2]["enemies"] = new Render(std::vector<GLfloat>(),
                                        std::vector<GLuint>(),
                                        GL_DYNAMIC_DRAW,
-                                       assets.getTexture("res/enemy/01.png"),
+                                       assets.getAnimation("enemy"),
                                        assets.getShader("res/game2d"));
 }
 
