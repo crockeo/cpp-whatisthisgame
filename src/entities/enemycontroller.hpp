@@ -23,6 +23,9 @@ private:
     // Setting the next time and resetting the timer.
     void setNextTime();
 
+    // Adding a new enemy.
+    void addEnemy(GLFWwindow*);
+
 public:
     constexpr static int minSpawnTime =  333;
     constexpr static int maxSpawnTime = 2000;
@@ -32,6 +35,12 @@ public:
 
     // Updating the set of enemies.
     void update(GLFWwindow*, const GameState&, float) override;
+
+    // Initializing the enemy renders.
+    void initRender(GLFWwindow*, const Assets&, Renders&) const override;
+
+    // Rendering the set of enemies.
+    void render(GLFWwindow*, Renders&) const override;
 };
 
 #endif

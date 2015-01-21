@@ -19,6 +19,7 @@ set(SOURCES
   src/entities/background.cpp
   src/entities/bullet.cpp
   src/entities/player.cpp
+  src/entities/enemy.cpp
   src/res/animation.cpp
   src/res/texture.cpp
   src/res/shader.cpp
@@ -29,6 +30,7 @@ set(SOURCES
   src/config.cpp
   src/delta.cpp
   src/timer.cpp
+  src/utils.cpp
   src/game.cpp
   src/main.cpp
 )

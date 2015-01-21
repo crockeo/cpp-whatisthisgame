@@ -12,6 +12,17 @@
 // Code //
 
 // A class to represent thine enemies.
-class Enemy : public Entity { };
+class Enemy : public Entity {
+public:
+    constexpr static float speed = 200.f;
+    constexpr static float minSize = 30.f;
+    constexpr static float maxSize = 50.f;
+
+    // Creating a new enemy centered on an x & y coordinate with a given size.
+    Enemy(float, float, float);
+
+    // Updating this enemy.
+    void update(GLFWwindow*, const GameState&, float) override;
+};
 
 #endif
