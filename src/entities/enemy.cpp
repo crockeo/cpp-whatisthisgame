@@ -2,6 +2,7 @@
 
 //////////////
 // Includes //
+#include "bulletcontroller.hpp"
 #include "enemycontroller.hpp"
 
 //////////
@@ -19,9 +20,15 @@ Enemy::Enemy(float x, float y, float size, int index, void* controller) :
 
 // Updating this enemy.
 void Enemy::update(GLFWwindow* window, const GameState& gs, float dt) {
+    EnemyController* ec = (EnemyController*)this->controller;
     this->position().x -= Enemy::speed * dt;
     if (this->position().x < -this->position().w)
-        ((EnemyController*)this->controller)->mark(this->index);
+        ec->mark(this->index);
 
-    // TODO: Dying on bullet collision.
+    BulletController* bc = (BulletController*)gs.getEntity("bulletcontroller");
+    std::vector<Rectangle> rectangles = bc->getCollisionRectangles();
+
+    for (auto it = rectangles.begin(); it != rectangles.end(); it++)
+        if (this->position().collides(*it))
+            ec->mark(this->index);
 }

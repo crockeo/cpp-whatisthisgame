@@ -38,6 +38,15 @@ void BulletController::kill() {
     this->marks.clear();
 }
 
+// Getting the set of collision rectangles for the bullets.
+std::vector<Rectangle> BulletController::getCollisionRectangles() const {
+    std::vector<Rectangle> rectangles;
+    for (auto it = this->bullets.begin(); it != this->bullets.end(); it++)
+        if (*it != nullptr)
+            rectangles.push_back((*it)->getPosition());
+    return rectangles;
+}
+
 // Updating the BulletController.
 void BulletController::update(GLFWwindow* window, const GameState& gs, float dt) {
     Player* p = (Player*)gs.getEntity("player");

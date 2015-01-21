@@ -37,6 +37,9 @@ public:
     // Killing off all of the marked bullets.
     void kill();
 
+    // Getting the set of collision rectangles for the bullets.
+    std::vector<Rectangle> getCollisionRectangles() const;
+
     // Updating the BulletController.
     void update(GLFWwindow*, const GameState&, float) override;
 

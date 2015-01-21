@@ -10,6 +10,15 @@ struct Rectangle {
 
     // Constructing a new rectangle.
     Rectangle(float, float, float, float);
+
+    // Getting different sides of the rectangle.
+    float left()   const;
+    float right()  const;
+    float top()    const;
+    float bottom() const;
+
+    // Checking if a rectangle collides with another one.
+    bool collides(Rectangle) const;
 };
 
 #endif
