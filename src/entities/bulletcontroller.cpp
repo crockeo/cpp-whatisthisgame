@@ -39,11 +39,11 @@ void BulletController::kill() {
 }
 
 // Getting the set of collision rectangles for the bullets.
-std::vector<Rectangle> BulletController::getCollisionRectangles() const {
-    std::vector<Rectangle> rectangles;
-    for (auto it = this->bullets.begin(); it != this->bullets.end(); it++)
-        if (*it != nullptr)
-            rectangles.push_back((*it)->getPosition());
+std::vector<std::tuple<int, Rectangle>> BulletController::getCollisionRectangles() const {
+    std::vector<std::tuple<int, Rectangle>> rectangles;
+    for (int i = 0; i < this->bullets.size(); i++)
+        if (this->bullets[i] != nullptr)
+            rectangles.push_back(std::make_tuple(i, this->bullets[i]->getPosition()));
     return rectangles;
 }
 

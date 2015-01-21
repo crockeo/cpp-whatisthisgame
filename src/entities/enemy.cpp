@@ -2,6 +2,8 @@
 
 //////////////
 // Includes //
+#include <tuple>
+
 #include "bulletcontroller.hpp"
 #include "enemycontroller.hpp"
 
@@ -26,9 +28,13 @@ void Enemy::update(GLFWwindow* window, const GameState& gs, float dt) {
         ec->mark(this->index);
 
     BulletController* bc = (BulletController*)gs.getEntity("bulletcontroller");
-    std::vector<Rectangle> rectangles = bc->getCollisionRectangles();
 
-    for (auto it = rectangles.begin(); it != rectangles.end(); it++)
-        if (this->position().collides(*it))
+    std::vector<std::tuple<int, Rectangle>> rectangles = bc->getCollisionRectangles();
+
+    for (auto it = rectangles.begin(); it != rectangles.end(); it++) {
+        if (this->position().collides(std::get<1>(*it))) {
+            bc->mark(std::get<0>(*it));
             ec->mark(this->index);
+        }
+    }
 }

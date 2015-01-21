@@ -5,6 +5,7 @@
 // Includes //
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <tuple>
 #include <set>
 
 #include "../gamestate.hpp"
@@ -38,7 +39,7 @@ public:
     void kill();
 
     // Getting the set of collision rectangles for the bullets.
-    std::vector<Rectangle> getCollisionRectangles() const;
+    std::vector<std::tuple<int, Rectangle>> getCollisionRectangles() const;
 
     // Updating the BulletController.
     void update(GLFWwindow*, const GameState&, float) override;
