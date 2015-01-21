@@ -16,7 +16,12 @@ Controller::Controller() :
 
 // Destroying this controller.
 Controller::~Controller() {
-    // TODO: DESTROY THIS CONTROLLER.
+    for (auto& v: this->values) {
+        if (v != nullptr)
+            delete v;
+    }
+
+    this->marks.clear();
 }
 
 // Marking a pointer.
