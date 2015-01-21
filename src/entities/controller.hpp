@@ -7,8 +7,6 @@
 #include <GLFW/glfw3.h>
 #include <unordered_set>
 
-#include "../res/texture.hpp"
-#include "../res/shader.hpp"
 #include "../gamestate.hpp"
 #include "../rendering.hpp"
 #include "../assets.hpp"
@@ -43,6 +41,11 @@ public:
 
     // Getting the set of values from this controller.
     std::unordered_set<Entity*> getValues();
+
+    // Virtual functions for the entity.
+    virtual void update     (GLFWwindow*, const GameState&, float   )       override = 0;
+    virtual void initRender (GLFWwindow*, const Assets&   , Renders&) const override = 0;
+    virtual void render     (GLFWwindow*,                   Renders&) const override = 0;
 };
 
 #endif
