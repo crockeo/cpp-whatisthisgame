@@ -17,7 +17,7 @@
 // Code //
 
 // A generic controller class.
-class Controller {
+class Controller : public Entity {
 protected:
     std::unordered_set<Entity*> values;
     std::unordered_set<Entity*> marks;
@@ -40,6 +40,9 @@ public:
 
     // Adding a value.
     void addValue(Entity*);
+
+    // Getting the set of values from this controller.
+    std::unordered_set<Entity*> getValues();
 };
 
 #endif

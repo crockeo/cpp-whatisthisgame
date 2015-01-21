@@ -11,7 +11,8 @@ void Controller::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
 }
 
 // Constructing a Controller with a given Texture, Shader, and render type.
-Controller::Controller() { }
+Controller::Controller() :
+        Entity(Rectangle(0, 0, 0, 0)) { }
 
 // Destroying this controller.
 Controller::~Controller() {
@@ -36,3 +37,6 @@ void Controller::addValue(Entity* e) {
     if (e != nullptr)
         this->values.insert(e);
 }
+
+// Getting the set of values from this controller.
+std::unordered_set<Entity*> Controller::getValues() { return this->values; }
