@@ -17,6 +17,7 @@ set(SOURCES
   src/entities/enemycontroller.cpp
   src/entities/scoretracker.cpp
   src/entities/background.cpp
+  src/entities/controller.cpp
   src/entities/bullet.cpp
   src/entities/player.cpp
   src/entities/enemy.cpp
