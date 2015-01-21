@@ -63,12 +63,6 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     initializeGameState(window, gs, timers);
     gs.initRenderAll(window, assets, renders);
 
-    renders[1]["enemies"] = new Render(generateRectangles(gs.enemies),
-                                       rectangleOrders(gs.enemies.size()),
-                                       GL_STATIC_DRAW,
-                                       assets.getTexture("res/enemy/01.png"),
-                                       assets.getShader("res/game2d"));
-
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));
     render(window, cfg, std::ref(running), std::cref(assets), std::cref(gs), renders);
 
