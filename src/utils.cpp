@@ -18,3 +18,8 @@ float randomFloat(float min, float max) {
         return min;
     return randomFloat() * (max - min) + min;
 }
+
+// Performing a bit of linear interpolation on a value.
+float lerp(float f1, float f2, float steps, float dt) {
+    return f1 + (f2 - f1) * (dt / steps);
+}

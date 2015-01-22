@@ -1,5 +1,9 @@
 #include "player.hpp"
 
+//////////////
+// Includes //
+#include "../utils.hpp"
+
 //////////
 // Code //
 
@@ -25,11 +29,7 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 
     if (!my) {
-        if (this->dy > 0) {
-            this->dy -= Player::decel_speed * dt;
-        } else {
-            this->dy += Player::decel_speed * dt;
-        }
+        this->dy = lerp(dy, 0, 0.2f, dt);
     }
 
     if (!my && this->dy > -Player::min_speed && this->dy < Player::min_speed)
