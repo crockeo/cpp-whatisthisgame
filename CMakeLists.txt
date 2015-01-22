@@ -27,6 +27,7 @@ set(SOURCES
   src/gamestate.cpp
   src/rectangle.cpp
   src/rendering.cpp
+  src/observer.cpp
   src/assets.cpp
   src/config.cpp
   src/delta.cpp
