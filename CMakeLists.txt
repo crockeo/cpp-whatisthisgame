@@ -40,25 +40,19 @@ set(SOURCES
 add_executable(whatisthisgame ${SOURCES})
 
 # Looking for OpenGL & GLFW.
-find_package(freetype REQUIRED)
 find_package(opengl REQUIRED)
-find_package(ftgl REQUIRED)
 find_package(glew REQUIRED)
 find_package(glfw REQUIRED)
 find_package(png REQUIRED)
 
 # Adding the include directories.
-include_directories(${FREETYPE_INCLUDE_DIR}
-                    ${OPENGL_INCLUDE_DIR}
-                    ${FTGL_INCLUDE_DIR}
+include_directories(${OPENGL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIR}
                     ${GLFW_INCLUDE_DIR}
                     ${PNG_INCLUDE_DIR})
 
 # Linking the libraries.
-target_link_libraries(whatisthisgame ${FREETYPE_LIBRARY}
-                                     ${OPENGL_LIBRARY}
-                                     ${FTGL_LIBRARY}
+target_link_libraries(whatisthisgame ${OPENGL_LIBRARY}
                                      ${GLEW_LIBRARY}
                                      ${GLFW_LIBRARY}
                                      ${PNG_LIBRARY})
