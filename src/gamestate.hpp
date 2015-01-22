@@ -51,9 +51,6 @@ private:
     std::vector<Timer*> timers;
 
 public:
-    Rectangle position;
-    std::vector<Rectangle> enemies;
-
     // Deleting some implicitly declared stuff.
     GameState(const GameState&) = delete;
     GameState& operator=(const GameState&) = delete;
