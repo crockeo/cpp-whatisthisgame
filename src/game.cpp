@@ -59,8 +59,7 @@ void game::startThreads(GLFWwindow* window, Config cfg, const Assets& assets) {
     Renders renders(5);
 
     GameState gs;
-    std::vector<Timer*> timers = assets.getAnimationTimers();
-    initializeGameState(window, gs, timers);
+    initializeGameState(window, gs, assets.getAnimationTimers());
     gs.initRenderAll(window, assets, renders);
 
     std::thread updateThread(update, window, cfg, std::cref(running), std::ref(gs));

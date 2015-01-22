@@ -3,6 +3,7 @@
 
 //////////////
 // Includes //
+#include <memory>
 #include <vector>
 
 #include "../timer.hpp"
@@ -16,10 +17,10 @@
 class Animation : public Texable {
 private:
     std::vector<Texture> textures;
+    std::shared_ptr<Timer> timer;
     float frameLength;
     bool isOriginal;
     bool doesLoop;
-    Timer* timer;
 
     // Calculating the current frame index.
     unsigned int calcCurrentFrameIndex() const;
@@ -36,11 +37,8 @@ public:
     // Overriding the default copy constructor.
     Animation(const Animation&);
 
-    // Destroying this thingy.
-    ~Animation();
-
     // Getting the timer that exists
-    Timer* getTimer();
+    std::shared_ptr<Timer> getTimer();
 
     // Getting the current frame of an animation.
     Texture getCurrentFrame() const;

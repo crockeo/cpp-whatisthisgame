@@ -39,7 +39,7 @@ public:
     void addShader(std::string);
 
     // Getting the vector of animation timers.
-    std::vector<Timer*> getAnimationTimers() const;
+    std::vector<std::shared_ptr<Timer>> getAnimationTimers() const;
 
     // Getting different kind of assets.
     const Animation& getAnimation(std::string) const;

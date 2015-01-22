@@ -20,9 +20,9 @@ Animation::Animation(std::vector<Texture> textures, float frameLength, bool does
     this->doesLoop    = doesLoop;
 
     if (this->doesLoop)
-        this->timer = new Timer(this->textures.size() * this->frameLength);
+        this->timer = std::make_shared<Timer>(this->textures.size() * this->frameLength);
     else
-        this->timer = new Timer();
+        this->timer = std::make_shared<Timer>();
 }
 
 // Creating a new animation with all of the above, assuming that it will
@@ -39,14 +39,8 @@ Animation::Animation(const Animation& anim) {
     this->timer       = anim.timer;
 }
 
-// Destroying this thingy.
-Animation::~Animation() {
-    if (this->isOriginal)
-        delete this->timer;
-}
-
 // Getting the timer that exists
-Timer* Animation::getTimer() { return this->timer; }
+std::shared_ptr<Timer> Animation::getTimer() { return this->timer; }
 
 // Getting the current frame of an animation.
 Texture Animation::getCurrentFrame() const {

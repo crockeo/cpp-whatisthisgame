@@ -32,7 +32,7 @@ GameState::~GameState() {
 }
 
 // Adding a timer to this GameState.
-void GameState::addTimer(Timer* timer) { this->timers.push_back(timer); }
+void GameState::addTimer(std::shared_ptr<Timer> timer) { this->timers.push_back(timer); }
 
 // Updating every entity in this GameState.
 void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
@@ -81,7 +81,7 @@ Entity* GameState::getEntity(std::string name) const {
 }
 
 // Constructing a default GameState.
-void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<Timer*>& timers) {
+void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<std::shared_ptr<Timer>>& timers) {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
     for (auto it = timers.begin(); it != timers.end(); it++)

@@ -48,7 +48,7 @@ public:
 struct GameState {
 private:
     std::unordered_map<std::string, Entity*> entities;
-    std::vector<Timer*> timers;
+    std::vector<std::shared_ptr<Timer>> timers;
 
 public:
     // Deleting some implicitly declared stuff.
@@ -62,7 +62,7 @@ public:
     ~GameState();
 
     // Adding a timer to this GameState.
-    void addTimer(Timer*);
+    void addTimer(std::shared_ptr<Timer>);
 
     // Updating every entity in this GameState.
     void updateAll(GLFWwindow*, const GameState&, float);
@@ -84,6 +84,6 @@ public:
 };
 
 // Constructing a default GameState.
-void initializeGameState(GLFWwindow*, GameState&, const std::vector<Timer*>&);
+void initializeGameState(GLFWwindow*, GameState&, const std::vector<std::shared_ptr<Timer>>&);
 
 #endif

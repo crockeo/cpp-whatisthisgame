@@ -34,8 +34,8 @@ void Assets::addShader(std::string path) {
 }
 
 // Getting the vector of animation timers.
-std::vector<Timer*> Assets::getAnimationTimers() const {
-    std::vector<Timer*> timers;
+std::vector<std::shared_ptr<Timer>> Assets::getAnimationTimers() const {
+    std::vector<std::shared_ptr<Timer>> timers;
 
     for (auto it = this->animations.begin(); it != this->animations.end(); it++)
         if (std::get<1>(*it) != nullptr)
