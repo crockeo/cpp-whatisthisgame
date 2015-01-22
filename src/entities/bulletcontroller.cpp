@@ -17,6 +17,7 @@ void BulletController::update(GLFWwindow* window, const GameState& gs, float dt)
         this->timer.reset();
         this->addValue(new Bullet(p->getPosition().x + p->getPosition().w / 2,
                                   p->getPosition().y + p->getPosition().h / 2 - Bullet::height / 2,
+                                  p->getDY() / 8,
                                   this));
     }
 

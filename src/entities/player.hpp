@@ -21,9 +21,9 @@ private:
 
 public:
     constexpr static float speed       = 2250;
-    constexpr static float decel_speed = speed / 2;
+    constexpr static float decel_speed = speed * 2;
     constexpr static float max_speed   = speed / 4;
-    constexpr static float min_speed   = 10;
+    constexpr static float min_speed   = 20;
     constexpr static float width       = 60;
     constexpr static float height      = 60;
 
@@ -41,6 +41,9 @@ public:
 
     // Checking if the player is actively shooting.
     bool isShooting() const;
+
+    // Getting the current delta y of the player.
+    float getDY() const;
 };
 
 #endif

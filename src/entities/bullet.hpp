@@ -17,6 +17,7 @@
 // A class to represent a bullet entity.
 class Bullet : public Entity {
 private:
+    float dy;
     void* controller;
 
 public:
@@ -25,7 +26,7 @@ public:
     constexpr static float speed  = 500;
 
     // Constructing a new bullet at a given location.
-    Bullet(float, float, void*);
+    Bullet(float, float, float dy, void*);
 
     // Updating this bullet.
     void update(GLFWwindow*, const GameState&, float) override;

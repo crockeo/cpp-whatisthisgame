@@ -73,3 +73,6 @@ void Player::render(GLFWwindow* window, Renders& renders) const {
 
 // Checking if the player is actively shooting.
 bool Player::isShooting() const { return this->shooting; }
+
+// Getting the current delta y of the player.
+float Player::getDY() const { return this->dy; }
