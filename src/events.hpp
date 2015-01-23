@@ -15,9 +15,6 @@ struct BulletShootEvent : public Event {
     // Constructing a new BulletShotEvent.
     BulletShootEvent(float, float, float);
 
-    // Copy constructor.
-    BulletShootEvent(const BulletShootEvent&);
-
     // Getting the type of this event.
     Event::EventType getType() const;
 };
@@ -26,6 +23,15 @@ struct BulletShootEvent : public Event {
 struct EnemyWinEvent : public Event { };
 
 // An event to represent an entity being shot.
-struct EnemyShotEvent : public Event { };
+struct EnemyShotEvent : public Event {
+    float x, y;
+    void* ptr;
+
+    // Creating a new EnemyShotEvent.
+    EnemyShotEvent(float, float, void*);
+
+    // Getting the type of this event.
+    Event::EventType getType() const;
+};
 
 #endif

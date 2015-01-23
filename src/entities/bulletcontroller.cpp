@@ -11,7 +11,10 @@
 
 // Constructing this thing.
 BulletController::BulletController() {
-    OM::instance().addListener(Event::BULLET_SHOOT_EVENT, this);
+    OM& om = OM::instance();
+
+    om.addListener(Event::BULLET_SHOOT_EVENT, this);
+    om.addListener(Event::ENEMY_SHOT_EVENT, this);
 }
 
 // Updating the bullet controller.
@@ -51,5 +54,8 @@ void BulletController::alert(const Event& e) {
             this->timer.reset();
             this->addValue(new Bullet(bse.x, bse.y - Bullet::height / 2, bse.dy / 8, this));
         }
+    } else if (e.getType() == Event::ENEMY_SHOT_EVENT) {
+        const EnemyShotEvent& ese = dynamic_cast<const EnemyShotEvent&>(e);
+        this->mark(static_cast<Entity*>(ese.ptr));
     }
 }

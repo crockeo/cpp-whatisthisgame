@@ -6,6 +6,8 @@
 
 #include "bulletcontroller.hpp"
 #include "enemycontroller.hpp"
+#include "../observer.hpp"
+#include "../events.hpp"
 
 //////////
 // Code //
@@ -27,11 +29,11 @@ void Enemy::update(GLFWwindow* window, const GameState& gs, float dt) {
         ec->mark(this);
 
     BulletController* bc = (BulletController*)gs.getEntity("bulletcontroller");
-    auto bullets = bc->getValues();
-
-    for (auto& b: bullets) {
+    for (auto& b: bc->getValues()) {
         if (this->position().collides(b->getPosition())) {
-            bc->mark(b);
+            OM::instance().alert(EnemyShotEvent(this->position().x + this->position().w / 2,
+                                                this->position().y + this->position().h / 2,
+                                                b));
             ec->mark(this);
         }
     }
