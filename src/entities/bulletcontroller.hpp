@@ -8,6 +8,7 @@
 
 #include "../gamestate.hpp"
 #include "../rendering.hpp"
+#include "../observer.hpp"
 #include "controller.hpp"
 #include "../assets.hpp"
 
@@ -15,12 +16,16 @@
 // Code //
 
 // A specific Bullet Controller type.
-class BulletController : public Controller {
+class BulletController : public Controller,
+                         public Listener {
 private:
     Timer timer;
 
 public:
     constexpr static float spawnRate = 0.3f;
+
+    // Constructing this thing.
+    BulletController();
 
     // Updating the bullet controller.
     void update(GLFWwindow*, const GameState&, float) override;
@@ -30,6 +35,9 @@ public:
 
     // Rendering the bullet controller.
     void render(GLFWwindow*, Renders&) const override;
+
+    // Alerting to the existence of some event.
+    void alert(const Event&);
 };
 
 #endif

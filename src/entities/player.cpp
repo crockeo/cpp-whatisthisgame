@@ -2,6 +2,8 @@
 
 //////////////
 // Includes //
+#include "../observer.hpp"
+#include "../events.hpp"
 #include "../utils.hpp"
 
 //////////
@@ -40,7 +42,10 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
         my = true;
     }
 
+    OM& om = OM::instance();
     this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || (present && bs[1]);
+    if (this->shooting)
+        om.alert(BulletShootEvent(this->position().x, this->position().y, this->dy));
 
     if (!my) {
         this->dy = lerp(dy, 0, 0.2f, dt);

@@ -2,25 +2,21 @@
 
 //////////////
 // Includes //
+#include "../events.hpp"
 #include "bullet.hpp"
 #include "player.hpp"
 
 //////////
 // Code //
 
+// Constructing this thing.
+BulletController::BulletController() {
+    OM::instance().addListener(Event::BULLET_SHOOT_EVENT, this);
+}
+
 // Updating the bullet controller.
 void BulletController::update(GLFWwindow* window, const GameState& gs, float dt) {
     this->timer.update(dt);
-
-    Player* p = static_cast<Player*>(gs.getEntity("player"));
-    if (p->isShooting() && this->timer.getTime() > BulletController::spawnRate) {
-        this->timer.reset();
-        this->addValue(new Bullet(p->getPosition().x + p->getPosition().w / 2,
-                                  p->getPosition().y + p->getPosition().h / 2 - Bullet::height / 2,
-                                  p->getDY() / 8,
-                                  this));
-    }
-
     this->kill();
     this->updateAll(window, gs, dt);
 }
@@ -44,4 +40,16 @@ void BulletController::render(GLFWwindow* window, Renders& renders) const {
     renders[1]["bullets"]->updateVertices(generateRectangles(rs),
                                           rectangleOrders(rs.size()),
                                           GL_DYNAMIC_DRAW);
+}
+
+// Alerting to the existence of some event.
+void BulletController::alert(const Event& e) {
+    if (e.getType() == Event::BULLET_SHOOT_EVENT) {
+        const BulletShootEvent& bse = dynamic_cast<const BulletShootEvent&>(e);
+
+        if (this->timer.getTime() > BulletController::spawnRate) {
+            this->timer.reset();
+            this->addValue(new Bullet(bse.x, bse.y - Bullet::height / 2, bse.dy / 8, this));
+        }
+    }
 }

@@ -25,8 +25,7 @@ OM& OM::instance() {
 
 // Adding a new listener to the class.
 void OM::addListener(Event::EventType et, std::shared_ptr<Listener> l) {
-    if (this->listeners[et].find(l) == this->listeners[et].end())
-        this->listeners[et].insert(l);
+    this->listeners[et].insert(l);
 }
 
 void OM::addListener(Event::EventType et, Listener* l) {
@@ -34,7 +33,7 @@ void OM::addListener(Event::EventType et, Listener* l) {
 }
 
 // Alerting every Listener in this OM.
-void OM::alert(Event e) const {
+void OM::alert(const Event& e) const {
     if (this->listeners.find(e.getType()) != this->listeners.end())
         for (auto& l: this->listeners.at(e.getType()))
             l->alert(e);

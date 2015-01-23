@@ -30,6 +30,7 @@ set(SOURCES
   src/observer.cpp
   src/assets.cpp
   src/config.cpp
+  src/events.cpp
   src/delta.cpp
   src/timer.cpp
   src/utils.cpp
