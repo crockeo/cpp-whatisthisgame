@@ -23,13 +23,8 @@ OM& OM::instance() {
     return *OM::_om;
 }
 
-// Adding a new listener to the class.
-void OM::addListener(Event::EventType et, std::shared_ptr<Listener> l) {
-    this->listeners[et].insert(l);
-}
-
 void OM::addListener(Event::EventType et, Listener* l) {
-    this->addListener(et, std::shared_ptr<Listener>(l));
+    this->listeners[et].insert(l);
 }
 
 // Alerting every Listener in this OM.

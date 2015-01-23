@@ -41,7 +41,7 @@ class OM {
 private:
     static std::unique_ptr<OM> _om;
 
-    std::map<Event::EventType, std::set<std::shared_ptr<Listener>>> listeners;
+    std::map<Event::EventType, std::set<Listener*>> listeners;
 
     // Constructing a new OM.
     OM();
@@ -51,7 +51,6 @@ public:
     static OM& instance();
 
     // Adding a new listener to the class.
-    void addListener(Event::EventType, std::shared_ptr<Listener>);
     void addListener(Event::EventType, Listener*);
 
     // Alerting every Listener in this OM.
