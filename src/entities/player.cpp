@@ -9,8 +9,6 @@
 //////////
 // Code //
 
-#include <iostream>
-
 // Creating a new player at a given location.
 Player::Player(float x, float y) :
         Entity(Rectangle(x, y, Player::width, Player::height)) {
@@ -45,7 +43,9 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     OM& om = OM::instance();
     this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || (present && bs[1]);
     if (this->shooting)
-        om.alert(BulletShootEvent(this->position().x, this->position().y, this->dy));
+        om.alert(BulletShootEvent(this->position().x + this->position().w / 2,
+                                  this->position().y + this->position().h / 2,
+                                  this->dy));
 
     if (!my) {
         this->dy = lerp(dy, 0, 0.2f, dt);
