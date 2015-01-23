@@ -2,6 +2,7 @@
 
 //////////////
 // Includes //
+#include "entities/explodecontroller.hpp"
 #include "entities/bulletcontroller.hpp"
 #include "entities/enemycontroller.hpp"
 #include "entities/scoretracker.hpp"
@@ -87,6 +88,7 @@ void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<st
     for (auto it = timers.begin(); it != timers.end(); it++)
         gs.addTimer(*it);
 
+    gs.addEntity("explodecontroller", new ExplodeController());
     gs.addEntity("bulletcontroller", new BulletController());
     gs.addEntity("enemycontroller", new EnemyController());
     gs.addEntity("scoretracker", new ScoreTracker());
