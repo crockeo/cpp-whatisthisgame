@@ -16,7 +16,6 @@
 // A class to represent the player.
 class Player : public Entity {
 private:
-    bool shooting;
     float dy;
 
 public:
@@ -38,12 +37,6 @@ public:
 
     // Rendering this entity.
     void render(GLFWwindow*, Renders&) const override;
-
-    // Checking if the player is actively shooting.
-    bool isShooting() const;
-
-    // Getting the current delta y of the player.
-    float getDY() const;
 };
 
 #endif

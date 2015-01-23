@@ -41,8 +41,7 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
     }
 
     OM& om = OM::instance();
-    this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || (present && bs[1]);
-    if (this->shooting)
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || (present && bs[1] == GLFW_PRESS))
         om.alert(BulletShootEvent(this->position().x + this->position().w / 2,
                                   this->position().y + this->position().h / 2,
                                   this->dy));
@@ -89,9 +88,3 @@ void Player::render(GLFWwindow* window, Renders& renders) const {
                                          rectangleOrder(),
                                          GL_DYNAMIC_DRAW);
 }
-
-// Checking if the player is actively shooting.
-bool Player::isShooting() const { return this->shooting; }
-
-// Getting the current delta y of the player.
-float Player::getDY() const { return this->dy; }
