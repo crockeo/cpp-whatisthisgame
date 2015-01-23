@@ -47,7 +47,7 @@ void ExplodeController::initRender(GLFWwindow* window, const Assets& assets, Ren
     renders[2]["explosions"] = new Render(std::vector<GLfloat>(),
                                           std::vector<GLuint>(),
                                           GL_DYNAMIC_DRAW,
-                                          assets.getTexture("res/asteroid/01/01.png"),
+                                          assets.getTexture("res/explosion.png"),
                                           assets.getShader("res/game2d"));
 }
 
@@ -66,6 +66,6 @@ void ExplodeController::render(GLFWwindow* window, Renders& renders) const {
 void ExplodeController::alert(const Event& e) {
     if (e.getType() == Event::ENEMY_SHOT_EVENT) {
         const EnemyShotEvent& ese = dynamic_cast<const EnemyShotEvent&>(e);
-        this->addValue(new Explode(ese.x, ese.y, 20, 20, 1.f, this));
+        this->addValue(new Explode(ese.x, ese.y, ese.size, ese.size, 1.f, this));
     }
 }

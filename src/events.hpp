@@ -31,10 +31,11 @@ struct EnemyWinEvent : public Event {
 // An event to represent an entity being shot.
 struct EnemyShotEvent : public Event {
     float x, y;
+    float size;
     void* ptr;
 
     // Creating a new EnemyShotEvent.
-    EnemyShotEvent(float, float, void*);
+    EnemyShotEvent(float, float, float, void*);
 
     // Getting the type of this event.
     Event::EventType getType() const;

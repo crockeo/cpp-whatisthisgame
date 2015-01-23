@@ -106,4 +106,7 @@ void loadAssets(Assets& assets) {
     };
 
     assets.addAnimation("player", player, 0.2f);
+
+    // Adding the explosion!
+    assets.addTexture("res/explosion.png");
 }

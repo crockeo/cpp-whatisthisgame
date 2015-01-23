@@ -37,6 +37,7 @@ void Enemy::update(GLFWwindow* window, const GameState& gs, float dt) {
         if (this->position().collides(b->getPosition())) {
             om.alert(EnemyShotEvent(this->position().x + this->position().w / 2,
                                     this->position().y + this->position().h / 2,
+                                    this->position().w,
                                     b));
             ec->mark(this);
         }

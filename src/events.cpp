@@ -24,9 +24,10 @@ Event::EventType EnemyWinEvent::getType() const {
 }
 
 // Creating a new EnemyShotEvent.
-EnemyShotEvent::EnemyShotEvent(float x, float y, void* ptr) {
+EnemyShotEvent::EnemyShotEvent(float x, float y, float size, void* ptr) {
     this->x = x;
     this->y = y;
+    this->size = size;
     this->ptr = ptr;
 }
 
