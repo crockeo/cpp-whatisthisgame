@@ -23,17 +23,21 @@ Enemy::Enemy(float x, float y, float size, void* controller) :
 
 // Updating this enemy.
 void Enemy::update(GLFWwindow* window, const GameState& gs, float dt) {
+    OM& om = OM::instance();
     EnemyController* ec = (EnemyController*)this->controller;
+
     this->position().x -= Enemy::speed * dt;
-    if (this->position().x < -this->position().w)
+    if (this->position().x < -this->position().w) {
+        om.alert(EnemyWinEvent());
         ec->mark(this);
+    }
 
     BulletController* bc = (BulletController*)gs.getEntity("bulletcontroller");
     for (auto& b: bc->getValues()) {
         if (this->position().collides(b->getPosition())) {
-            OM::instance().alert(EnemyShotEvent(this->position().x + this->position().w / 2,
-                                                this->position().y + this->position().h / 2,
-                                                b));
+            om.alert(EnemyShotEvent(this->position().x + this->position().w / 2,
+                                    this->position().y + this->position().h / 2,
+                                    b));
             ec->mark(this);
         }
     }

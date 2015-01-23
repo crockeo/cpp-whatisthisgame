@@ -20,7 +20,13 @@ struct BulletShootEvent : public Event {
 };
 
 // An event to represent an enemy getting behind our lines and winning!
-struct EnemyWinEvent : public Event { };
+struct EnemyWinEvent : public Event {
+    // Constructing this thing.
+    EnemyWinEvent();
+
+    // Getting the event type.
+    Event::EventType getType() const;
+};
 
 // An event to represent an entity being shot.
 struct EnemyShotEvent : public Event {
