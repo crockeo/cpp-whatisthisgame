@@ -7,6 +7,8 @@
 //////////
 // Code //
 
+#include <iostream>
+
 // Creating a new player at a given location.
 Player::Player(float x, float y) :
         Entity(Rectangle(x, y, Player::width, Player::height)) {
@@ -15,18 +17,30 @@ Player::Player(float x, float y) :
 
 // Updating this entity.
 void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
+    bool present = false;
+    int joystick;
+    for (joystick = 0; joystick <= GLFW_JOYSTICK_LAST; joystick++) {
+        if (glfwJoystickPresent(joystick) == GL_TRUE) {
+            present = true;
+            break;
+        }
+    }
+
+    int num;
+    const unsigned char* bs = glfwGetJoystickButtons(joystick, &num);
+
     bool my = false;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || (present && bs[12] == GLFW_PRESS)) {
         this->dy += ((this->dy < 0 ? Player::decel_speed : 0) + Player::speed) * dt;
         my = true;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || (present && bs[14] == GLFW_PRESS)) {
         this->dy -= ((this->dy > 0 ? Player::decel_speed : 0) + Player::speed) * dt;
         my = true;
     }
 
-    this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+    this->shooting = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || (present && bs[1]);
 
     if (!my) {
         this->dy = lerp(dy, 0, 0.2f, dt);
