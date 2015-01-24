@@ -47,7 +47,7 @@ void ExplodeController::initRender(GLFWwindow* window, const Assets& assets, Ren
     renders[2]["explosions"] = new Render(std::vector<GLfloat>(),
                                           std::vector<GLuint>(),
                                           GL_DYNAMIC_DRAW,
-                                          assets.getTexture("res/explosion.png"),
+                                          assets.getAnimation("explosion"),
                                           assets.getShader("res/game2d"));
 }
 

@@ -107,6 +107,15 @@ void loadAssets(Assets& assets) {
 
     assets.addAnimation("player", player, 0.2f);
 
-    // Adding the explosion!
-    assets.addTexture("res/explosion.png");
+    // Adding the explosions!
+    assets.addTexture("res/explosion/01.png");
+    assets.addTexture("res/explosion/02.png");
+
+    // Explosion animation!
+    std::vector<Texture> explosion {
+        assets.getTexture("res/explosion/01.png"),
+        assets.getTexture("res/explosion/02.png")
+    };
+
+    assets.addAnimation("explosion", explosion, 0.4f);
 }
