@@ -49,3 +49,8 @@ Texture Animation::getCurrentFrame() const {
 
 // Getting the current texture ID.
 GLuint Animation::getID() const { return this->getCurrentFrame().getID(); }
+
+// Getting the texture coordinates.
+std::vector<GLfloat> Animation::getTextureCoords() const {
+    return this->getCurrentFrame().getTextureCoords();
+}

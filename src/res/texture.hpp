@@ -4,6 +4,7 @@
 //////////////
 // Includes //
 #include <GL/glew.h>
+#include <vector>
 #include <string>
 
 #include "texable.hpp"
@@ -30,6 +31,9 @@ public:
 
     // Accessing the texture id.
     GLuint getID() const override;
+
+    // Getting the texture coordinates.
+    std::vector<GLfloat> getTextureCoords() const override;
 
     // Checking if the texture is good.
     bool good() const;

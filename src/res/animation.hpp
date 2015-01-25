@@ -45,6 +45,9 @@ public:
 
     // Getting the current texture ID.
     GLuint getID() const override;
+
+    // Getting the texture coordinates.
+    std::vector<GLfloat> getTextureCoords() const override;
 };
 
 #endif

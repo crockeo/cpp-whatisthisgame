@@ -161,6 +161,18 @@ Texture::~Texture() {
 // Accessing the texture id.
 GLuint Texture::getID() const { return this->id; }
 
+// Getting the texture coordinates.
+std::vector<GLfloat> Texture::getTextureCoords() const{
+    std::vector<GLfloat> tc {
+        0.f, 0.f,
+        1.f, 0.f,
+        1.f, 1.f,
+        0.f, 1.f
+    };
+
+    return tc;
+}
+
 // Checking if the texture is good.
 bool Texture::good() const { return this->getID() != 0; }
 

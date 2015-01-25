@@ -4,6 +4,7 @@
 //////////////
 // Includes //
 #include <GL/glew.h>
+#include <vector>
 
 //////////
 // Code //
@@ -12,7 +13,10 @@
 class Texable {
 public:
     // Getting the texture ID.
-    virtual GLuint getID() const { return 0; }
+    virtual GLuint getID() const = 0;
+
+    // Getting the texture coordinates.
+    virtual std::vector<GLfloat> getTextureCoords() const = 0;
 };
 
 #endif
