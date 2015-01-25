@@ -21,6 +21,7 @@ set(SOURCES
   src/entities/controller.cpp
   src/entities/bullet.cpp
   src/entities/player.cpp
+  src/res/spritesheet.cpp
   src/entities/enemy.cpp
   src/res/animation.cpp
   src/res/texture.cpp
