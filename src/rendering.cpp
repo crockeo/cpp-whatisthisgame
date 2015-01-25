@@ -17,10 +17,10 @@ std::vector<T> flatten(std::vector<std::vector<T>> levels) {
 // The coordinates themselves for the rectangle.
 std::vector<GLfloat> generateRectangle(Rectangle r) {
     std::vector<GLfloat> vertices {
-        r.x      , r.y      , 0.f, 0.f,
-        r.x + r.w, r.y      , 1.f, 0.f,
-        r.x + r.w, r.y + r.h, 1.f, 1.f,
-        r.x      , r.y + r.h, 0.f, 1.f
+        r.x      , r.y      ,
+        r.x + r.w, r.y      ,
+        r.x + r.w, r.y + r.h,
+        r.x      , r.y + r.h
     };
 
     return vertices;
@@ -110,9 +110,22 @@ void Render::updateVertices(std::vector<GLfloat> vertices, std::vector<GLuint> o
     if (this->order != nullptr)
         delete[] this->order;
 
-    this->vertices = new GLfloat[vertices.size()];
-    for (int i = 0; i < vertices.size(); i++)
-        this->vertices[i] = vertices[i];
+    std::vector<GLfloat> texCoords = this->texture.getTextureCoords();
+    this->vertices = new GLfloat[vertices.size() * 2];
+
+    int lvc = 0, evc = 0, tvc = 0;
+    while (lvc < vertices.size() * 2 && evc < vertices.size()) {
+        this->vertices[lvc    ] = vertices [evc    ];
+        this->vertices[lvc + 1] = vertices [evc + 1];
+        this->vertices[lvc + 2] = texCoords[tvc    ];
+        this->vertices[lvc + 3] = texCoords[tvc + 1];
+
+        lvc += 4;
+        evc += 2;
+        tvc += 2;
+        if (tvc >= texCoords.size())
+            tvc = 0;
+    }
 
     this->order = new GLuint[order.size()];
     for (int i = 0; i < order.size(); i++)
@@ -121,7 +134,7 @@ void Render::updateVertices(std::vector<GLfloat> vertices, std::vector<GLuint> o
     this->points = order.size();
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertices.size(), this->vertices, type);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertices.size() * 2, this->vertices, type);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * order.size(), this->order, type);
