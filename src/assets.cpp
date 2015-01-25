@@ -115,4 +115,7 @@ void loadAssets(Assets& assets) {
     };
 
     assets.addAnimation("explosion", explosion, 0.4f);
+
+    // Adding a test thing.
+    assets.addSpritesheet("res/test.png", 3, 1);
 }

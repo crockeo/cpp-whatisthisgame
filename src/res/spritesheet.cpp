@@ -10,8 +10,8 @@ Spritesheet::Spritesheet(Texture tex, int cols, int rows) :
     this->cols = cols;
     this->rows = rows;
 
-    this->col = 0;
-    this->row = 0;
+    this->col = 1;
+    this->row = 1;
 }
 
 // Getting the size of the Spritesheet.
@@ -21,8 +21,8 @@ std::tuple<int, int> Spritesheet::getSize() const {
 
 // Setting the current position of the Spritesheet.
 void Spritesheet::setPosition(int col, int row) {
-    this->col = col;
-    this->row = row;
+    this->col = col + 1;
+    this->row = row + 1;
 }
 
 // Getting the current position of the Spritesheet.
