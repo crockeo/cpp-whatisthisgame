@@ -6,19 +6,15 @@
 // Creating an empty set of assets.
 Assets::Assets() { }
 
-// Destructing assets.
-Assets::~Assets() {
-    for (auto it = this->animations.begin(); it != this->animations.end(); it++)
-        delete std::get<1>(*it);
-    for (auto it = this->textures.begin(); it != this->textures.end(); it++)
-        delete std::get<1>(*it);
-    for (auto it = this->shaders.begin(); it != this->shaders.end(); it++)
-        delete std::get<1>(*it);
+// Adding different kinds of assets.
+void Assets::addSpritesheet(std::string path, int cols, int rows) {
+    if (this->textures.find(path) == this->textures.end())
+        this->addTexture(path);
+    this->spritesheets[path] = std::unique_ptr<Spritesheet>(new Spritesheet(this->getTexture(path), cols, rows));
 }
 
-// Adding different kinds of assets.
 void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength, bool doesLoop) {
-    this->animations[path] = new Animation(textures, frameLength, doesLoop);
+    this->animations[path] = std::unique_ptr<Animation>(new Animation(textures, frameLength, doesLoop));
 }
 
 void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength) {
@@ -26,11 +22,11 @@ void Assets::addAnimation(std::string path, std::vector<Texture> textures, float
 }
 
 void Assets::addTexture(std::string path) {
-    this->textures[path] = new Texture(path);
+    this->textures[path] = std::unique_ptr<Texture>(new Texture(path));
 }
 
 void Assets::addShader(std::string path) {
-    this->shaders[path] = new Shader(path);
+    this->shaders[path] = std::unique_ptr<Shader>(new Shader(path));
 }
 
 // Getting the vector of animation timers.
@@ -45,6 +41,7 @@ std::vector<std::shared_ptr<Timer>> Assets::getAnimationTimers() const {
 }
 
 // Getting different kind of assets.
+const Spritesheet& Assets::getSpritesheet(std::string path) const { return *this->spritesheets.at(path); }
 const Animation& Assets::getAnimation(std::string path) const { return *this->animations.at(path); }
 const Texture& Assets::getTexture(std::string path) const { return *this->textures.at(path); }
 const Shader& Assets::getShader(std::string path) const { return *this->shaders.at(path); }

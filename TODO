@@ -1,0 +1,3 @@
+I need to implement Spritesheet loading from inside the set of assets and then I
+also need to make choosing one's own texture vertices works. Because that's kind
+of important for the architecture that I have in mind.

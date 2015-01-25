@@ -4,9 +4,11 @@
 //////////////
 // Includes //
 #include <unordered_map>
+#include <memory>
 #include <string>
 #include <vector>
 
+#include "res/spritesheet.hpp"
 #include "res/animation.hpp"
 #include "res/texture.hpp"
 #include "res/shader.hpp"
@@ -18,9 +20,10 @@
 // A class to encapsulate asset loading and referencing.
 class Assets {
 private:
-    std::unordered_map<std::string, Animation*> animations;
-    std::unordered_map<std::string, Texture*> textures;
-    std::unordered_map<std::string, Shader*> shaders;
+    std::unordered_map<std::string, std::unique_ptr<Spritesheet>> spritesheets;
+    std::unordered_map<std::string, std::unique_ptr<Animation>> animations;
+    std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
+    std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
 
 public:
     // Removing the implicit copy constructor.
@@ -29,10 +32,8 @@ public:
     // Creating an empty set of assets.
     Assets();
 
-    // Destructing assets.
-    ~Assets();
-
     // Adding different kinds of assets.
+    void addSpritesheet(std::string, int, int);
     void addAnimation(std::string, std::vector<Texture>, float, bool);
     void addAnimation(std::string, std::vector<Texture>, float);
     void addTexture(std::string);
@@ -42,6 +43,7 @@ public:
     std::vector<std::shared_ptr<Timer>> getAnimationTimers() const;
 
     // Getting different kind of assets.
+    const Spritesheet& getSpritesheet(std::string) const;
     const Animation& getAnimation(std::string) const;
     const Texture& getTexture(std::string) const;
     const Shader& getShader(std::string) const;
