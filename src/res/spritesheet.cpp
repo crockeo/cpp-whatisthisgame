@@ -14,6 +14,10 @@ Spritesheet::Spritesheet(Texture tex, int cols, int rows) :
     this->row = 1;
 }
 
+// Accessing specific columns or rows of the Spritesheet.
+int Spritesheet::getCols() const { return this->cols; }
+int Spritesheet::getRows() const { return this->rows; }
+
 // Getting the size of the Spritesheet.
 std::tuple<int, int> Spritesheet::getSize() const {
     return std::make_tuple(this->cols, this->rows);
@@ -30,20 +34,29 @@ std::tuple<int, int> Spritesheet::getPosition() const {
     return std::make_tuple(this->col, this->row);
 }
 
+// Getting the texture coordinates to use pretending that the spritesheet is
+// at a given location.
+std::vector<GLfloat> Spritesheet::getTextureCoordsAt(int col, int row) const {
+    float x = col / static_cast<float>(this->cols),
+          y = row / static_cast<float>(this->rows),
+          w = 1   / static_cast<float>(this->cols),
+          h = 1   / static_cast<float>(this->rows);
+
+
+    std::vector<GLfloat> tc {
+        x    , y    ,
+        x + w, y    ,
+        x + w, y + h,
+        x    , y + h
+    };
+    
+    return tc;
+}
+
 // Getting the ID of the texture.
 GLuint Spritesheet::getID() const { return this->tex.getID(); }
 
 // Getting the texture coordinates to use.
 std::vector<GLfloat> Spritesheet::getTextureCoords() const {
-    float icol = this->col / static_cast<float>(this->cols),
-          irow = this->row / static_cast<float>(this->rows);
-
-    std::vector<GLfloat> tc {
-        icol * this->col       , irow * this->row       ,
-        icol * this->col + icol, irow * this->row       ,
-        icol * this->col + icol, irow * this->row + irow,
-        icol * this->col       , irow * this->row + irow
-    };
-    
-    return tc;
+    return this->getTextureCoordsAt(this->col, this->row);
 }

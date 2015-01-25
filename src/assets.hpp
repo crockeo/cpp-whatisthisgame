@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "res/spritesheet.hpp"
+#include "res/ssanimation.hpp"
 #include "res/animation.hpp"
 #include "res/texture.hpp"
 #include "res/shader.hpp"
@@ -21,6 +22,7 @@
 class Assets {
 private:
     std::unordered_map<std::string, std::unique_ptr<Spritesheet>> spritesheets;
+    std::unordered_map<std::string, std::unique_ptr<SSAnimation>> ssAnimations;
     std::unordered_map<std::string, std::unique_ptr<Animation>> animations;
     std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
     std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
@@ -34,6 +36,8 @@ public:
 
     // Adding different kinds of assets.
     void addSpritesheet(std::string, int, int);
+    void addSSAnimation(std::string, Spritesheet, float, bool);
+    void addSSAnimation(std::string, Spritesheet, float);
     void addAnimation(std::string, std::vector<Texture>, float, bool);
     void addAnimation(std::string, std::vector<Texture>, float);
     void addTexture(std::string);
@@ -44,6 +48,7 @@ public:
 
     // Getting different kind of assets.
     const Spritesheet& getSpritesheet(std::string) const;
+    const SSAnimation& getSSAnimation(std::string) const;
     const Animation& getAnimation(std::string) const;
     const Texture& getTexture(std::string) const;
     const Shader& getShader(std::string) const;

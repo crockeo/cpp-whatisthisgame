@@ -13,6 +13,14 @@ void Assets::addSpritesheet(std::string path, int cols, int rows) {
     this->spritesheets[path] = std::unique_ptr<Spritesheet>(new Spritesheet(this->getTexture(path), cols, rows));
 }
 
+void Assets::addSSAnimation(std::string name, Spritesheet ss, float frameLength, bool loop) {
+    this->ssAnimations[name] = std::unique_ptr<SSAnimation>(new SSAnimation(ss, frameLength, loop));
+}
+
+void Assets::addSSAnimation(std::string name, Spritesheet ss, float frameLength) {
+    this->addSSAnimation(name, ss, frameLength, true);
+}
+
 void Assets::addAnimation(std::string path, std::vector<Texture> textures, float frameLength, bool doesLoop) {
     this->animations[path] = std::unique_ptr<Animation>(new Animation(textures, frameLength, doesLoop));
 }
@@ -36,15 +44,27 @@ std::vector<std::shared_ptr<Timer>> Assets::getAnimationTimers() const {
     for (auto it = this->animations.begin(); it != this->animations.end(); it++)
         if (std::get<1>(*it) != nullptr)
             timers.push_back(std::get<1>(*it)->getTimer());
+    for (auto it = this->ssAnimations.begin(); it != this->ssAnimations.end(); it++)
+        if (std::get<1>(*it) != nullptr)
+            timers.push_back(std::get<1>(*it)->getTimer());
+
+    //for (const auto a&: this->animations)
+        //if (std::get<1>(a) != nullptr)
+            //timers.push_back(std::get<1>(a)->getTimer());
+
+    //for (const auto a&: this->ssAnimations)
+        //if (std::get<1>(a) != nullptr)
+            //timers.push_back(std::get<1>(a)->getTimer());
 
     return timers;
 }
 
 // Getting different kind of assets.
 const Spritesheet& Assets::getSpritesheet(std::string path) const { return *this->spritesheets.at(path); }
-const Animation& Assets::getAnimation(std::string path) const { return *this->animations.at(path); }
-const Texture& Assets::getTexture(std::string path) const { return *this->textures.at(path); }
-const Shader& Assets::getShader(std::string path) const { return *this->shaders.at(path); }
+const SSAnimation& Assets::getSSAnimation(std::string path) const { return *this->ssAnimations.at(path); }
+const Animation& Assets::getAnimation(std::string path)     const { return *this->animations.at(path);   }
+const Texture& Assets::getTexture(std::string path)         const { return *this->textures.at(path);     }
+const Shader& Assets::getShader(std::string path)           const { return *this->shaders.at(path);      }
 
 // Loading the default set of assets into the ref.
 void loadAssets(Assets& assets) {
@@ -118,4 +138,10 @@ void loadAssets(Assets& assets) {
 
     // Adding a test thing.
     assets.addSpritesheet("res/test.png", 3, 1);
+
+    assets.addSSAnimation(
+        "test",
+        assets.getSpritesheet("res/test.png"),
+        0.2f
+    );
 }

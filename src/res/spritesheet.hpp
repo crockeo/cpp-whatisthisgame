@@ -24,6 +24,10 @@ public:
     // columns.
     Spritesheet(Texture, int, int);
 
+    // Accessing specific columns or rows of the Spritesheet.
+    int getCols() const;
+    int getRows() const;
+
     // Getting the size of the Spritesheet.
     std::tuple<int, int> getSize() const;
 
@@ -32,6 +36,10 @@ public:
 
     // Getting the current position of the Spritesheet.
     std::tuple<int, int> getPosition() const;
+
+    // Getting the texture coordinates to use pretending that the spritesheet is
+    // at a given location.
+    std::vector<GLfloat> getTextureCoordsAt(int, int) const;
 
     // Getting the ID of the texture.
     GLuint getID() const override;
