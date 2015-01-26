@@ -45,6 +45,7 @@ set(SOURCES
 add_executable(whatisthisgame ${SOURCES})
 
 # Looking for OpenGL & GLFW.
+find_package(libdrawtext REQUIRED)
 find_package(opengl REQUIRED)
 find_package(glew REQUIRED)
 find_package(glfw REQUIRED)
