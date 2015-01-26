@@ -92,56 +92,29 @@ void loadAssets(Assets& assets) {
     assets.addTexture("res/bullet.png");
 
     // The enemy.
-    assets.addTexture("res/enemy/01.png");
-    assets.addTexture("res/enemy/02.png");
-    assets.addTexture("res/enemy/03.png");
-
-    // Adding the enemy animation.
-    std::vector<Texture> enemy {
-        assets.getTexture("res/enemy/01.png"),
-        assets.getTexture("res/enemy/02.png"),
-        assets.getTexture("res/enemy/03.png")
-    };
-
-    assets.addAnimation("enemy", enemy, 0.2f);
+    assets.addSpritesheet("res/enemy.png", 3, 1);
+    assets.addSSAnimation(
+        "enemy",
+        assets.getSpritesheet("res/enemy.png"),
+        0.2f
+    );
 
     // The game shader.
     assets.addShader("res/game2d");
 
     // The player.
-    assets.addTexture("res/player/01.png");
-    assets.addTexture("res/player/02.png");
-    assets.addTexture("res/player/03.png");
-    assets.addTexture("res/player/04.png");
-
-    // Adding the player animation.
-    std::vector<Texture> player {
-        assets.getTexture("res/player/01.png"),
-        assets.getTexture("res/player/02.png"),
-        assets.getTexture("res/player/03.png"),
-        assets.getTexture("res/player/04.png")
-    };
-
-    assets.addAnimation("player", player, 0.2f);
+    assets.addSpritesheet("res/player.png", 2, 2);
+    assets.addSSAnimation(
+        "player",
+        assets.getSpritesheet("res/player.png"),
+        0.2f
+    );
 
     // Adding the explosions!
-    assets.addTexture("res/explosion/01.png");
-    assets.addTexture("res/explosion/02.png");
-
-    // Explosion animation!
-    std::vector<Texture> explosion {
-        assets.getTexture("res/explosion/01.png"),
-        assets.getTexture("res/explosion/02.png")
-    };
-
-    assets.addAnimation("explosion", explosion, 0.4f);
-
-    // Adding a test thing.
-    assets.addSpritesheet("res/test.png", 3, 1);
-
+    assets.addSpritesheet("res/explosion.png", 2, 1);
     assets.addSSAnimation(
-        "test",
-        assets.getSpritesheet("res/test.png"),
-        0.2f
+        "explosion",
+        assets.getSpritesheet("res/explosion.png"),
+        0.4f
     );
 }

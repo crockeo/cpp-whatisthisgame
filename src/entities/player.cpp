@@ -78,7 +78,7 @@ void Player::update(GLFWwindow* window, const GameState& gs, float dt) {
 void Player::initRender(GLFWwindow* window, const Assets& assets, Renders& renders) const {
     renders[0]["player"] = new Render(this->getPosition(),
                                       GL_DYNAMIC_DRAW,
-                                      assets.getAnimation("player"),
+                                      assets.getSSAnimation("player"),
                                       assets.getShader("res/game2d"));
 }
 
