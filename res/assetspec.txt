@@ -1,0 +1,14 @@
+shader res/game2d
+
+texture res/background.png
+
+texture res/bullet.png
+
+spritesheet res/enemy.png 3 1
+animation enemy res/enemy.png 0.2 1
+
+spritesheet res/player.png 2 2
+animation player res/player.png 0.2 1
+
+spritesheet res/explosion.png 2 1
+animation explosion res/explosion.png 0.4 1

@@ -1,5 +1,9 @@
 #include "assets.hpp"
 
+//////////////
+// Includes //
+#include <fstream>
+
 //////////
 // Code //
 
@@ -48,14 +52,6 @@ std::vector<std::shared_ptr<Timer>> Assets::getAnimationTimers() const {
         if (std::get<1>(*it) != nullptr)
             timers.push_back(std::get<1>(*it)->getTimer());
 
-    //for (const auto a&: this->animations)
-        //if (std::get<1>(a) != nullptr)
-            //timers.push_back(std::get<1>(a)->getTimer());
-
-    //for (const auto a&: this->ssAnimations)
-        //if (std::get<1>(a) != nullptr)
-            //timers.push_back(std::get<1>(a)->getTimer());
-
     return timers;
 }
 
@@ -66,55 +62,69 @@ const Animation& Assets::getAnimation(std::string path)     const { return *this
 const Texture& Assets::getTexture(std::string path)         const { return *this->textures.at(path);     }
 const Shader& Assets::getShader(std::string path)           const { return *this->shaders.at(path);      }
 
-// Loading the default set of assets into the ref.
-void loadAssets(Assets& assets) {
-    // Loading all of the asteroid frames (I should make spritesheet loading and
-    // move them all into a single thing).
-    assets.addTexture("res/asteroid/01/01.png");
-    assets.addTexture("res/asteroid/01/02.png");
-    assets.addTexture("res/asteroid/01/03.png");
-    assets.addTexture("res/asteroid/01/04.png");
-    assets.addTexture("res/asteroid/01/05.png");
-    assets.addTexture("res/asteroid/01/06.png");
-    assets.addTexture("res/asteroid/01/07.png");
-    assets.addTexture("res/asteroid/01/08.png");
-    assets.addTexture("res/asteroid/01/09.png");
-    assets.addTexture("res/asteroid/01/10.png");
-    assets.addTexture("res/asteroid/01/11.png");
-    assets.addTexture("res/asteroid/01/12.png");
-    assets.addTexture("res/asteroid/01/13.png");
-    assets.addTexture("res/asteroid/01/14.png");
+// Loading an AssetLoads from an istream.
+AssetLoads::AssetLoads(std::istream&& in) throw(std::string) {
+    if (!in.good())
+        throw std::string("Invalid input stream.");
 
-    // The background.
-    assets.addTexture("res/background.png");
+    try {
+        while (!in.eof()) {
+            std::string prefix;
+            in >> prefix;
 
-    // The bullet.
-    assets.addTexture("res/bullet.png");
+            if (prefix.compare("shader") == 0) {
+                std::string path;
+                in >> path;
+                this->shaderLoads.push_back(path);
+            } else if (prefix.compare("texture") == 0) {
+                std::string path;
+                in >> path;
+                this->textureLoads.push_back(path);
+            } else if (prefix.compare("spritesheet") == 0) {
+                std::string path;
+                int cols, rows;
 
-    // The enemy.
-    assets.addSpritesheet("res/enemy.png", 3, 1);
-    assets.addSSAnimation(
-        "enemy",
-        assets.getSpritesheet("res/enemy.png"),
-        0.2f
-    );
+                in >> path;
+                in >> cols;
+                in >> rows;
 
-    // The game shader.
-    assets.addShader("res/game2d");
+                this->spritesheetLoads.push_back(std::make_tuple(path, cols, rows));
+            } else if (prefix.compare("animation") == 0) {
+                std::string name, path;
+                float frameLength;
+                bool loop;
 
-    // The player.
-    assets.addSpritesheet("res/player.png", 2, 2);
-    assets.addSSAnimation(
-        "player",
-        assets.getSpritesheet("res/player.png"),
-        0.2f
-    );
+                in >> name;
+                in >> path;
+                in >> frameLength;
+                in >> loop;
 
-    // Adding the explosions!
-    assets.addSpritesheet("res/explosion.png", 2, 1);
-    assets.addSSAnimation(
-        "explosion",
-        assets.getSpritesheet("res/explosion.png"),
-        0.4f
-    );
+                this->ssAnimationLoads.push_back(std::make_tuple(name, path, frameLength, loop));
+            }
+        }
+    } catch (const std::exception& e) { throw std::string("Parse error."); }
+}
+
+// Loading an AssetLoads from a given location.
+AssetLoads::AssetLoads(std::string path) throw(std::string) :
+        AssetLoads(std::ifstream(path)) { }
+
+// Filling an Assets given the local information.
+void AssetLoads::fillAssets(Assets& assets) {
+    for (auto& a: this->shaderLoads)
+        assets.addShader(a);
+
+    for (auto& a: this->textureLoads)
+        assets.addTexture(a);
+
+    for (auto& a: this->spritesheetLoads)
+        assets.addSpritesheet(std::get<0>(a),
+                              std::get<1>(a),
+                              std::get<2>(a));
+
+    for (auto& a: this->ssAnimationLoads)
+        assets.addSSAnimation(std::get<0>(a),
+                              assets.getSpritesheet(std::get<1>(a)),
+                              std::get<2>(a),
+                              std::get<3>(a));
 }

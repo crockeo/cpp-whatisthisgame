@@ -51,7 +51,7 @@ bool startEngine(Config cfg) {
         return true;
     }
 
-    // Getting everything ready and kicking off the render & update threads.
+    // Setting up OpenGL, and GLEW>
     glfwMakeContextCurrent(window);
     glewExperimental = GL_TRUE;
     int err = glewInit();
@@ -67,9 +67,18 @@ bool startEngine(Config cfg) {
     glEnable(GL_DEPTH);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // Creating the set of assets.
     Assets a;
-    loadAssets(a);
 
+    // Trying to dynamically fill the assets.
+    try {
+        AssetLoads als("res/assetspec.txt");
+        als.fillAssets(a);
+    } catch (std::string& s) { std::cout << s << std::endl; }
+
+    //loadAssets(a);
+
+    // Starting up.
     game::startThreads(window, cfg, a);
 
     return false;

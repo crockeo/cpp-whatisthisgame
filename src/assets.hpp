@@ -4,6 +4,7 @@
 //////////////
 // Includes //
 #include <unordered_map>
+#include <istream>
 #include <memory>
 #include <string>
 #include <vector>
@@ -54,7 +55,23 @@ public:
     const Shader& getShader(std::string) const;
 };
 
-// Loading the default set of assets into the ref.
-void loadAssets(Assets&);
+// The set of Assets to load.
+class AssetLoads {
+private:
+    std::vector<std::tuple<std::string, int, int>> spritesheetLoads;
+    std::vector<std::tuple<std::string, std::string, float, bool>> ssAnimationLoads;
+    std::vector<std::string> textureLoads;
+    std::vector<std::string> shaderLoads;
+
+public:
+    // Loading an AssetLoads from an istream.
+    AssetLoads(std::istream&&) throw(std::string);
+
+    // Loading an AssetLoads from a given location.
+    AssetLoads(std::string) throw(std::string);
+
+    // Filling an Assets given the local information.
+    void fillAssets(Assets&);
+};
 
 #endif
