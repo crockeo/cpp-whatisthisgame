@@ -72,6 +72,15 @@ AssetLoads::AssetLoads(std::istream&& in) throw(std::string) {
             std::string prefix;
             in >> prefix;
 
+            if (prefix.compare("#") == 0) {
+                char c;
+                do {
+                    c = in.get();
+                } while (c != '\n' && c != '\r');
+
+                continue;
+            }
+
             if (prefix.compare("shader") == 0) {
                 std::string path;
                 in >> path;

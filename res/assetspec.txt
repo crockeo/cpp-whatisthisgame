@@ -1,14 +1,20 @@
+# The primary game shader.
 shader res/game2d
 
+# The background.
 texture res/background.png
 
+# The bullet.
 texture res/bullet.png
 
+# Loading the enemy spritesheet and animation.
 spritesheet res/enemy.png 3 1
 animation enemy res/enemy.png 0.2 1
 
+# Loading the player spritesheet and animation.
 spritesheet res/player.png 2 2
 animation player res/player.png 0.2 1
 
+# Loading the explosion spritesheet and animation.
 spritesheet res/explosion.png 2 1
 animation explosion res/explosion.png 0.4 1
