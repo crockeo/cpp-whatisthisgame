@@ -14,6 +14,7 @@
 #include "res/animation.hpp"
 #include "res/texture.hpp"
 #include "res/shader.hpp"
+#include "res/font.hpp"
 #include "timer.hpp"
 
 //////////
@@ -27,6 +28,7 @@ private:
     std::unordered_map<std::string, std::unique_ptr<Animation>> animations;
     std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
     std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
+    std::unordered_map<std::string, std::unique_ptr<Font>> fonts;
 
 public:
     // Removing the implicit copy constructor.
@@ -43,6 +45,7 @@ public:
     void addAnimation(std::string, std::vector<Texture>, float);
     void addTexture(std::string);
     void addShader(std::string);
+    void addFont(std::string, int);
 
     // Getting the vector of animation timers.
     std::vector<std::shared_ptr<Timer>> getAnimationTimers() const;
@@ -53,6 +56,7 @@ public:
     const Animation& getAnimation(std::string) const;
     const Texture& getTexture(std::string) const;
     const Shader& getShader(std::string) const;
+    const Font& getFont(std::string) const;
 };
 
 // The set of Assets to load.
@@ -60,6 +64,7 @@ class AssetLoads {
 private:
     std::vector<std::tuple<std::string, int, int>> spritesheetLoads;
     std::vector<std::tuple<std::string, std::string, float, bool>> ssAnimationLoads;
+    std::vector<std::tuple<std::string, int>> fontLoads;
     std::vector<std::string> textureLoads;
     std::vector<std::string> shaderLoads;
 
