@@ -31,6 +31,7 @@ set(SOURCES
   src/rectangle.cpp
   src/rendering.cpp
   src/observer.cpp
+  src/res/font.cpp
   src/assets.cpp
   src/config.cpp
   src/events.cpp
@@ -46,19 +47,30 @@ add_executable(whatisthisgame ${SOURCES})
 
 # Looking for OpenGL & GLFW.
 find_package(libdrawtext REQUIRED)
+find_package(freetype REQUIRED)
 find_package(opengl REQUIRED)
+find_package(bzip2 REQUIRED)
 find_package(glew REQUIRED)
 find_package(glfw REQUIRED)
+find_package(zlib REQUIRED)
 find_package(png REQUIRED)
 
 # Adding the include directories.
-include_directories(${OPENGL_INCLUDE_DIR}
+include_directories(${LIBDRAWTEXT_INCLUDE_DIR}
+                    ${FREETYPE_INCLUDE_DIRS}
+                    ${OPENGL_INCLUDE_DIR}
+                    ${BZIP2_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIR}
                     ${GLFW_INCLUDE_DIR}
+                    ${ZLIB_INCLUDE_DIR}
                     ${PNG_INCLUDE_DIR})
 
 # Linking the libraries.
-target_link_libraries(whatisthisgame ${OPENGL_LIBRARY}
+target_link_libraries(whatisthisgame ${LIBDRAWTEXT_LIBRARY}
+                                     ${FREETYPE_LIBRARIES}
+                                     ${OPENGL_LIBRARY}
+                                     ${BZIP2_LIBRARY}
                                      ${GLEW_LIBRARY}
                                      ${GLFW_LIBRARY}
+                                     ${ZLIB_LIBRARY}
                                      ${PNG_LIBRARY})
