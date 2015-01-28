@@ -170,10 +170,36 @@ void Render::render(GLFWwindow* window) const {
     glDrawElements(GL_TRIANGLES, this->points, GL_UNSIGNED_INT, 0);
 }
 
+// Creating a FontRender with a given font, a given string, and the position
+// to render.
+FontRender::FontRender(Shader shader, Font font, std::string text, float x, float y) :
+        shader(shader),
+        font(font) {
+    this->text = text;
+    this->x = x;
+    this->y = y;
+}
+
+// Creating a FontRender from a font, but without a string.
+FontRender::FontRender(Shader shader, Font font) :
+        FontRender(shader, font, "", 0, 0) { }
+
+// Rendering this FontRender.
+void FontRender::render(GLFWwindow* window) const {
+    this->font.drawText(window, this->shader, text.c_str(), x, y);
+}
+
+// Updating the FontRender.
+void FontRender::updateText(std::string text, float x, float y) {
+    this->text = text;
+    this->x = x;
+    this->y = y;
+}
+
 // Constructing a set of renders with a given size.
 Renders::Renders(int size) {
     for (int i = 0; i < size; i++)
-        this->renders.push_back(new std::unordered_map<std::string, Render*>());
+        this->renders.push_back(new std::unordered_map<std::string, Renderable*>());
 }
 
 // Destroying the set of renders.
@@ -182,14 +208,14 @@ Renders::~Renders() {
 }
 
 // Getting a specific map.
-std::unordered_map<std::string, Render*>& Renders::operator[](int i) {
+std::unordered_map<std::string, Renderable*>& Renders::operator[](int i) {
     return *this->renders[i];
 }
 
 // Rendering this Renders.
 void Renders::renderAll(GLFWwindow* window) const {
     for (int i = this->renders.size() - 1; i >= 0; i--) {
-        std::unordered_map<std::string, Render*>* r = this->renders[i];
+        std::unordered_map<std::string, Renderable*>* r = this->renders[i];
 
         for (auto it = r->begin(); it != r->end(); it++)
             std::get<1>(*it)->render(window);

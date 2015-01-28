@@ -12,6 +12,7 @@
 #include "res/texable.hpp"
 #include "res/shader.hpp"
 #include "rectangle.hpp"
+#include "res/font.hpp"
 
 //////////
 // Code //
@@ -31,8 +32,17 @@ std::vector<GLuint> rectangleOrder();
 // The order for multiple rectangles.
 std::vector<GLuint> rectangleOrders(int);
 
+// An abstract class to represent that something is renderable.
+class Renderable {
+public:
+    virtual void render(GLFWwindow*) const = 0;
+
+    virtual void updateVertices(std::vector<GLfloat>, std::vector<GLuint>, GLenum) { }
+    virtual void updateText(std::string, float, float) { }
+};
+
 // A class to represent a single render.
-class Render {
+class Render : public Renderable {
 private:
     GLuint vao;
     GLuint vbo;
@@ -65,11 +75,33 @@ public:
     void render(GLFWwindow*) const;
 };
 
-// A set of Renders to perform on every tick.
+// A specific type of render for rendering a font.
+class FontRender : public Renderable {
+private:
+    std::string text;
+    Shader shader;
+    float x, y;
+    Font font;
 
+public:
+    // Creating a FontRender with a given font, a given string, and the position
+    // to render.
+    FontRender(Shader, Font, std::string, float, float);
+
+    // Creating a FontRender from a font, but without a string.
+    FontRender(Shader, Font);
+
+    // Rendering this FontRender.
+    void render(GLFWwindow*) const;
+
+    // Updating the FontRender.
+    void updateText(std::string, float, float);
+};
+
+// A set of Renders to perform on every tick.
 class Renders {
 private:
-    std::vector<std::unordered_map<std::string, Render*>*> renders;
+    std::vector<std::unordered_map<std::string, Renderable*>*> renders;
 
 public:
     // Keeping the Renders from being copied or set.
@@ -83,7 +115,7 @@ public:
     ~Renders();
     
     // Getting a specific map.
-    std::unordered_map<std::string, Render*>& operator[](int);
+    std::unordered_map<std::string, Renderable*>& operator[](int);
 
     // Rendering this Renders.
     void renderAll(GLFWwindow*) const;
