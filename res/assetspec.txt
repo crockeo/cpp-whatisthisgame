@@ -1,6 +1,9 @@
 # The primary game shader.
 shader res/game2d
 
+# Loading the text shader.
+shader res/text
+
 # The background.
 texture res/background.png
 
@@ -21,3 +24,4 @@ animation explosion res/explosion.png 0.4 1
 
 # Loading a font.
 font res/cubic.ttf 100
+font res/speculum.ttf 48
