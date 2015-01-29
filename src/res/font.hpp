@@ -46,6 +46,12 @@ public:
     // Destroying this font.
     ~Font();
 
+    // Finding the display width of a string.
+    float displayWidth(std::string) const;
+
+    // Finding the display height of a string.
+    float displayHeight(std::string) const;
+
     // Drawing text 'n' stuff.
     void drawText(GLFWwindow*, Shader, const char*,
                   float, float) const;

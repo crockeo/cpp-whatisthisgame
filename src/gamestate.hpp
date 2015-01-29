@@ -71,7 +71,7 @@ public:
     void initRenderAll(GLFWwindow*, const Assets&, Renders&) const;
 
     // Rendering every entity in this GameState.
-    void renderAll(GLFWwindow*, Renders&) const;
+    void renderAll(GLFWwindow*, const Assets&, Renders&) const;
 
     // Adding an entity.
     void addEntity(std::string, Entity*);

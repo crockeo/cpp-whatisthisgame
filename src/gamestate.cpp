@@ -91,14 +91,18 @@ void GameState::initRenderAll(GLFWwindow* window, const Assets& assets, Renders&
 }
 
 // Rendering every entity in this GameState.
-void GameState::renderAll(GLFWwindow* window, Renders& renders) const {
+void GameState::renderAll(GLFWwindow* window, const Assets& assets, Renders& renders) const {
     if (this->entities.find("lifetracker") != this->entities.end()) {
         LifeTracker* lt = dynamic_cast<LifeTracker*>(this->entities.at("lifetracker"));
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
 
         if (!lt->alive()) {
             renders[0]["lost"]->updateText(
                 "You lost.",
-                10, 240
+                width  / 2 - assets.getFont("res/cubic.ttf").displayWidth ("You lost.") / 2,
+                height / 2 - assets.getFont("res/cubic.ttf").displayHeight("You lost.") / 2
             );
         }
     }

@@ -59,6 +59,16 @@ Font& Font::operator=(const Font& font) {
 // Destroying this fontFace.
 Font::~Font() { this->destroy(); }
 
+// Finding the display width of a string.
+float Font::displayWidth(std::string) const {
+    return 0.f;
+}
+
+// Finding the display height of a string.
+float Font::displayHeight(std::string) const {
+    return 0.f;
+}
+
 // Drawing text 'n' stuff.
 void Font::drawText(GLFWwindow* window, Shader shader, const char* str,
                     float x, float y) const {
