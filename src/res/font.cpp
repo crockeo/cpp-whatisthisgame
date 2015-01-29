@@ -60,13 +60,21 @@ Font& Font::operator=(const Font& font) {
 Font::~Font() { this->destroy(); }
 
 // Finding the display width of a string.
-float Font::displayWidth(std::string) const {
-    return 0.f;
+float Font::displayWidth(std::string str) const {
+    float x = 0;
+    const char* ptr;
+    for (ptr = str.c_str(); *ptr; ptr++) {
+        if (FT_Load_Char(this->fontFace, *ptr, FT_LOAD_RENDER))
+            continue;
+        x += (this->fontFace->glyph->advance.x >> 6);
+    }
+
+    return x;
 }
 
 // Finding the display height of a string.
 float Font::displayHeight(std::string) const {
-    return 0.f;
+    return this->pnt;
 }
 
 // Drawing text 'n' stuff.
