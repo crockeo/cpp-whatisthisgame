@@ -64,13 +64,19 @@ void GameState::addTimer(std::shared_ptr<Timer> timer) { this->timers.push_back(
 
 // Updating every entity in this GameState.
 void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
-    for (auto it = this->timers.begin(); it != this->timers.end(); it++)
-        if (*it != nullptr)
-            (*it)->update(dt);
+    if (this->entities.find("lifetracker") != this->entities.end()) {
+        LifeTracker* lt = dynamic_cast<LifeTracker*>(this->entities.at("lifetracker"));
 
-    for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
-        if (std::get<1>(*it) != nullptr)
-            std::get<1>(*it)->update(window, gs, dt);
+        if (lt->alive()) {
+            for (auto it = this->timers.begin(); it != this->timers.end(); it++)
+                if (*it != nullptr)
+                    (*it)->update(dt);
+
+            for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
+                if (std::get<1>(*it) != nullptr)
+                    std::get<1>(*it)->update(window, gs, dt);
+            }
+        }
     }
 }
 

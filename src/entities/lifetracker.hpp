@@ -29,6 +29,9 @@ public:
     // Creating a LifeTracker with the standard amount of life.
     LifeTracker();
 
+    // Checking whether or not the player is alive.
+    bool alive() const;
+
     // Initializing the render.
     void initRender(GLFWwindow*, const Assets&, Renders&) const override;
 

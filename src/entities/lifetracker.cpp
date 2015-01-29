@@ -20,6 +20,9 @@ LifeTracker::LifeTracker(int life) :
 LifeTracker::LifeTracker() :
         LifeTracker(LifeTracker::standardLives) { }
 
+// Checking whether or not the player is alive.
+bool LifeTracker::alive() const { return this->life > 0; }
+
 // Initializing the render.
 void LifeTracker::initRender(GLFWwindow* window, const Assets& assets, Renders& renders) const {
     renders[0]["life"] = new FontRender(
