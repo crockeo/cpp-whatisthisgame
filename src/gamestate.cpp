@@ -6,6 +6,7 @@
 #include "entities/bulletcontroller.hpp"
 #include "entities/enemycontroller.hpp"
 #include "entities/scoretracker.hpp"
+#include "entities/lifetracker.hpp"
 #include "entities/background.hpp"
 #include "entities/player.hpp"
 
@@ -92,6 +93,7 @@ void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<st
     gs.addEntity("bulletcontroller", new BulletController());
     gs.addEntity("enemycontroller", new EnemyController());
     gs.addEntity("scoretracker", new ScoreTracker());
+    gs.addEntity("lifetracker", new LifeTracker());
     gs.addEntity("background", new Background());
     gs.addEntity("player", new Player(10, height / 2 - Player::height / 2));
 }
