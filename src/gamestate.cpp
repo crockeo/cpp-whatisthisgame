@@ -82,6 +82,8 @@ void GameState::updateAll(GLFWwindow* window, const GameState& gs, float dt) {
 
 // Initializing all of the renders for the GameState.
 void GameState::initRenderAll(GLFWwindow* window, const Assets& assets, Renders& renders) const {
+    renders[0]["lost"] = new FontRender(assets.getShader("res/text"), assets.getFont("res/cubic.ttf"));
+
     for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
         if (std::get<1>(*it) != nullptr)
             std::get<1>(*it)->initRender(window, assets, renders);
@@ -90,6 +92,17 @@ void GameState::initRenderAll(GLFWwindow* window, const Assets& assets, Renders&
 
 // Rendering every entity in this GameState.
 void GameState::renderAll(GLFWwindow* window, Renders& renders) const {
+    if (this->entities.find("lifetracker") != this->entities.end()) {
+        LifeTracker* lt = dynamic_cast<LifeTracker*>(this->entities.at("lifetracker"));
+
+        if (!lt->alive()) {
+            renders[0]["lost"]->updateText(
+                "You lost.",
+                10, 240
+            );
+        }
+    }
+
     for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
         if (std::get<1>(*it) != nullptr)
             std::get<1>(*it)->render(window, renders);
