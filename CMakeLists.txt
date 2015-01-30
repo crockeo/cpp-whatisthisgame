@@ -20,6 +20,7 @@ set(SOURCES
   src/entities/lifetracker.cpp
   src/entities/background.cpp
   src/entities/controller.cpp
+  src/entities/fpscounter.cpp
   src/entities/bullet.cpp
   src/entities/player.cpp
   src/res/spritesheet.cpp

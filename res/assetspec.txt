@@ -25,3 +25,4 @@ animation explosion res/explosion.png 0.4 1
 # Loading a font.
 font res/cubic.ttf 100
 font res/speculum.ttf 24
+font res/small-speculum.ttf 10

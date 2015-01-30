@@ -4,6 +4,8 @@
 //////////
 // Code //
 
+#define DEBUG false
+
 // A configuration for the game engine.
 struct Config {
     int windowWidth, windowHeight;

@@ -8,7 +8,10 @@
 #include "entities/scoretracker.hpp"
 #include "entities/lifetracker.hpp"
 #include "entities/background.hpp"
+#include "entities/fpscounter.hpp"
 #include "entities/player.hpp"
+
+#include "config.hpp"
 
 //////////
 // Code //
@@ -53,6 +56,8 @@ GameState::~GameState() {
                 delete dynamic_cast<LifeTracker*>(std::get<1>(*it));
             else if (name.compare("background") == 0)
                 delete dynamic_cast<Background*>(std::get<1>(*it));
+            else if (name.compare("fpscounter") == 0)
+                delete dynamic_cast<FpsCounter*>(std::get<1>(*it));
             else if (name.compare("player") == 0)
                 delete dynamic_cast<Player*>(std::get<1>(*it));
         }
@@ -144,5 +149,7 @@ void initializeGameState(GLFWwindow* window, GameState& gs, const std::vector<st
     gs.addEntity("scoretracker", new ScoreTracker());
     gs.addEntity("lifetracker", new LifeTracker());
     gs.addEntity("background", new Background());
+    if (DEBUG)
+        gs.addEntity("fpscounter", new FpsCounter());
     gs.addEntity("player", new Player(10, height / 2 - Player::height / 2));
 }
