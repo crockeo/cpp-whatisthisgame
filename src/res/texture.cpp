@@ -150,6 +150,7 @@ Texture::Texture(const Texture& t) {
 // Loading a texture from a location on the disk.
 Texture::Texture(std::string path) {
     this->id = png_texture_load(path.c_str(), &this->width, &this->height);
+    this->original = true;
 }
 
 // Deleting this texture.
