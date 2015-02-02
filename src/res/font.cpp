@@ -162,5 +162,6 @@ void Font::drawText(GLFWwindow* window, Shader shader, const char* str,
     }
 
     glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
     glDeleteTextures(1, &tex);
 }
