@@ -21,8 +21,10 @@ FT_Library FontLib::instance() {
 
 // Cleaning up this font.
 void Font::destroy() {
-    if (this->original)
+    if (this->original) {
+        glDeleteBuffers(1, &this->ebo);
         return;
+    }
 }
 
 // Constructing a font from a location.
@@ -36,13 +38,23 @@ Font::Font(std::string path, int pnt) {
 
     this->original = true;
     this->pnt      = pnt;
+
+    glGenBuffers(1, &this->ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ebo);
+
+    GLuint order[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    this->len = sizeof(order) / sizeof(GLuint);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(order), order, GL_STATIC_DRAW);
 }
 
 // Copy constructor.
 Font::Font(const Font& font) {
-    this->fontFace = font.fontFace;
     this->original = false;
-    this->pnt      = font.pnt;
+    *this = font;
 }
 
 // Assignment operator.
@@ -51,7 +63,9 @@ Font& Font::operator=(const Font& font) {
 
     this->fontFace = font.fontFace;
     this->original = false;
+    this->ebo      = font.ebo;
     this->pnt      = font.pnt;
+    this->len      = font.len;
 
     return *this;
 }
@@ -111,16 +125,7 @@ void Font::drawText(GLFWwindow* window, Shader shader, const char* str,
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     // Loading up the EBO.
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-
-    GLuint order[] = {
-        0, 1, 2,
-        2, 3, 0
-    };
-
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(order), order, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ebo);
 
     // Setting the vertex coordinate.
     GLint posAttrib = glGetAttribLocation(shader.getID(), "in_coords");
@@ -155,13 +160,12 @@ void Font::drawText(GLFWwindow* window, Shader shader, const char* str,
         };
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(box), box, GL_DYNAMIC_DRAW);
-        glDrawElements(GL_TRIANGLES, sizeof(order), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6 * sizeof(GLuint), GL_UNSIGNED_INT, 0);
 
         x += g->advance.x >> 6;
         y += g->advance.y >> 6;
     }
 
     glDeleteBuffers(1, &vbo);
-    glDeleteBuffers(1, &ebo);
     glDeleteTextures(1, &tex);
 }

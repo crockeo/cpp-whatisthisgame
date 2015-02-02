@@ -28,7 +28,8 @@ class Font {
 private:
     FT_Face fontFace;
     bool original;
-    int pnt;
+    GLuint ebo;
+    int pnt, len;
 
     // Cleaning up this font.
     void destroy();
