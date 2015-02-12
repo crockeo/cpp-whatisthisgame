@@ -31,37 +31,9 @@ GameState::GameState() { }
 
 // DESTROYING this GameState.
 GameState::~GameState() {
-    // Dear future programmer,
-    //
-    //   I'm sorry. I am really, truly sorry. The following code should never,
-    // ever have made it into a commit. I have a list of excuses (I was tired,
-    // I was near the end of the project, etc.) but none of them can atone for
-    // this hanous sin I have commited. It was segfaulting and-- and I just
-    // didn't know what to do. So I slapped a bunch of dynamic_casts everywhere
-    // and it worked. I'm so, so sorry. Please forgive me, future programmer.
-    //
-
-    for (auto it = this->entities.begin(); it != this->entities.end(); it++) {
-        if (std::get<1>(*it) != nullptr) {
-            std::string name = std::get<0>(*it);
-            if (name.compare("explodecontroller") == 0)
-                delete dynamic_cast<ExplodeController*>(std::get<1>(*it));
-            else if (name.compare("bulletcontroller") == 0)
-                delete dynamic_cast<BulletController*>(std::get<1>(*it));
-            else if (name.compare("enemycontroller") == 0)
-                delete dynamic_cast<EnemyController*>(std::get<1>(*it));
-            else if (name.compare("scoretracker") == 0)
-                delete dynamic_cast<ScoreTracker*>(std::get<1>(*it));
-            else if (name.compare("lifetracker") == 0)
-                delete dynamic_cast<LifeTracker*>(std::get<1>(*it));
-            else if (name.compare("background") == 0)
-                delete dynamic_cast<Background*>(std::get<1>(*it));
-            else if (name.compare("fpscounter") == 0)
-                delete dynamic_cast<FpsCounter*>(std::get<1>(*it));
-            else if (name.compare("player") == 0)
-                delete dynamic_cast<Player*>(std::get<1>(*it));
-        }
-    }
+    for (auto& e: this->entities)
+        if (std::get<1>(e) != nullptr)
+            delete std::get<1>(e);
 }
 
 // Adding a timer to this GameState.

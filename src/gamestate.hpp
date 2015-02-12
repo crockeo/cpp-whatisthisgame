@@ -28,6 +28,9 @@ public:
     // Constructing an entity at a given location.
     Entity(Rectangle);
 
+    // Default virtual destructor.
+    virtual ~Entity() { }
+
     // Updating this entity.
     virtual void update(GLFWwindow*, const GameState&, float) { }
 
