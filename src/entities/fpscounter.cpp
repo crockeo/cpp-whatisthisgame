@@ -13,7 +13,21 @@ FpsCounter::FpsCounter() :
 
 // Updating.
 void FpsCounter::update(GLFWwindow* window, const GameState& gs, float dt) {
-    this->fps = 1 / dt;
+    if (dt == 0)
+        return;
+
+    if (this->fpses.size() < FpsCounter::averageLength)
+        this->fpses.push_back(1 / dt);
+    else {
+        for (int i = this->fpses.size() - 1; i > 0; i--)
+            this->fpses[i] = this->fpses[i - 1];
+        this->fpses[0] = 1 / dt;
+    }
+
+    this->fps = 0;
+    for (float f: this->fpses)
+        this->fps += f;
+    this->fps /= this->fpses.size();
 }
 
 // Initializing rendering.

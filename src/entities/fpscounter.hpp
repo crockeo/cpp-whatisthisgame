@@ -15,9 +15,12 @@
 // A class to represent an FPS counter.
 class FpsCounter : public Entity {
 private:
+    std::vector<float> fpses;
     float fps;
 
 public:
+    constexpr static int averageLength = 50;
+
     // Starting the FPS counter.
     FpsCounter();
 
