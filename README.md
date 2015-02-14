@@ -4,9 +4,17 @@ This is a copy of my game
 [whatisthisgame](http://github.com/crockeo/whatisthisgame) written in C++
 instead of Haskell.
 
+This branch (`clibgame`) is a re-implementation of this project translating some
+of the features over to code in my
+[clibgame](http://github.com/crockeo/clibgame) project.
+
 ### Building
 
-Assuming you have CMake installed (with the minimum version of 2.8):
+You need CMake version `>= 2.8` for building.
+
+Before you build this project you're going to need to install the libraries for
+[clibgame](http://github.com/crockeo/clibgame). If you go over there and follow
+the install instructions, you should be set for this portion.
 
 ```bash
 $ cmake .
